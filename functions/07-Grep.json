@@ -1,0 +1,17 @@
+{
+  "description": "Content search built on ripgrep. Prefer this over grep/rg via Bash.\n\n- Full regex syntax.\n- Filter with glob or type.\n- output_mode: content, files_with_matches (default), or count.\n- multiline: true for patterns that span lines.",
+  "name": "Grep",
+  "parameters": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "glob": {"description": "Glob pattern to filter files", "type": "string"},
+      "output_mode": {"enum": ["content", "files_with_matches", "count"], "type": "string"},
+      "path": {"description": "File or directory to search in", "type": "string"},
+      "pattern": {"description": "The regular expression pattern to search for", "type": "string"},
+      "type": {"description": "File type to search (rg --type)", "type": "string"}
+    },
+    "required": ["pattern"],
+    "type": "object"
+  }
+}
