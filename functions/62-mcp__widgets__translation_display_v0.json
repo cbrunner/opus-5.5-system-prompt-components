@@ -1,0 +1,18 @@
+{
+  "description": "Show a translation card for a short passage. Do not repeat the translation in the reply.",
+  "name": "mcp__widgets__translation_display_v0",
+  "parameters": {
+    "properties": {
+      "pronunciation": {"type": "string"},
+      "source_lang": {"type": "string"},
+      "source_language": {"type": "string"},
+      "source_text": {"type": "string"},
+      "summary": {"type": "string"},
+      "target_lang": {"type": "string"},
+      "target_language": {"type": "string"},
+      "translation": {"type": "string"}
+    },
+    "required": ["source_language", "target_language", "target_lang", "source_text", "translation", "summary"],
+    "type": "object"
+  }
+}

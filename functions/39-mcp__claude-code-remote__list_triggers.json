@@ -1,0 +1,15 @@
+{
+  "description": "List scheduled tasks owned by this account. Use it to find trigger IDs for update_trigger and delete_trigger.",
+  "name": "mcp__claude-code-remote__list_triggers",
+  "parameters": {
+    "properties": {
+      "all_in_channel": {"type": "boolean"},
+      "cursor": {"type": "string"},
+      "enabled": {"type": "boolean"},
+      "include_completed": {"type": "boolean"},
+      "limit": {"type": "integer"},
+      "recurring": {"type": "boolean"}
+    },
+    "type": "object"
+  }
+}

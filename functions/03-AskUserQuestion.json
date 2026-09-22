@@ -1,0 +1,37 @@
+{
+  "description": "Ask the user 1-4 multiple-choice questions when blocked on a decision only they can make.",
+  "name": "AskUserQuestion",
+  "parameters": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "questions": {
+        "description": "Questions to ask the user (1-4 questions)",
+        "items": {
+          "properties": {
+            "header": {"type": "string"},
+            "multiSelect": {"type": "boolean"},
+            "options": {
+              "items": {
+                "properties": {"description": {"type": "string"}, "label": {"type": "string"}, "preview": {"type": "string"}},
+                "required": ["label", "description"],
+                "type": "object"
+              },
+              "maxItems": 4,
+              "minItems": 2,
+              "type": "array"
+            },
+            "question": {"type": "string"}
+          },
+          "required": ["question", "header", "options"],
+          "type": "object"
+        },
+        "maxItems": 4,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": ["questions"],
+    "type": "object"
+  }
+}

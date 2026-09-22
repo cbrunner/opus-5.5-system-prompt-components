@@ -1,0 +1,13 @@
+{
+  "description": "Launch a research agent for a comprehensive search through the web and other knowledge sources.",
+  "name": "mcp__claude_ai__launch_extended_search_task",
+  "parameters": {
+    "properties": {
+      "command": {"description": "A detailed, complete description of the research task.", "type": "string"},
+      "output_markdown_artifact": {"default": false, "type": "boolean"},
+      "output_react_artifact": {"default": false, "type": "boolean"}
+    },
+    "required": ["command"],
+    "type": "object"
+  }
+}
