@@ -1,12 +1,12 @@
-Source
+Credit
 ======
 
-The text in this repository was isolated from a public session extract:
+The underlying extract was published by Pliny the Liberator.
 
-https://github.com/elder-plinius/CL4R1T4S/blob/main/ANTHROPIC/CLAUDE-OPUS-5.5.md
+- GitHub file: https://github.com/elder-plinius/CL4R1T4S/blob/main/ANTHROPIC/CLAUDE-OPUS-5.5.md
+- Repo: https://github.com/elder-plinius/CL4R1T4S
+- X: https://x.com/elder_plinius
 
-Posted by Pliny the Liberator on 22 September 2026.
+This repository only splits and labels that public file. Credit Pliny the Liberator for the extraction.
 
-This is not an official Anthropic release. It is a study split of already-public text.
-The original extract also contains user turns, tool results, and on-demand skill files
-that are not copied here.
+Not an official Anthropic document.
