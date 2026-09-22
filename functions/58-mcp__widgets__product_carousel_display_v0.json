@@ -1,0 +1,26 @@
+{
+  "description": "Show a paged product carousel \u2014 one product per page, each with name, price, and a short blurb.",
+  "name": "mcp__widgets__product_carousel_display_v0",
+  "parameters": {
+    "properties": {
+      "products": {
+        "items": {
+          "properties": {
+            "blurb": {"type": "string"},
+            "name": {"type": "string"},
+            "price": {"type": "string"},
+            "url": {"type": "string"}
+          },
+          "required": ["name"],
+          "type": "object"
+        },
+        "maxItems": 6,
+        "minItems": 1,
+        "type": "array"
+      },
+      "summary": {"type": "string"}
+    },
+    "required": ["products", "summary"],
+    "type": "object"
+  }
+}

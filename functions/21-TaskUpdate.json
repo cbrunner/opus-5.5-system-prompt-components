@@ -1,0 +1,19 @@
+{
+  "description": "Update a task in the task list. Status workflow: pending \u2192 in_progress \u2192 completed. Use deleted to remove a task.",
+  "name": "TaskUpdate",
+  "parameters": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "addBlockedBy": {"items": {"type": "string"}, "type": "array"},
+      "addBlocks": {"items": {"type": "string"}, "type": "array"},
+      "description": {"type": "string"},
+      "owner": {"type": "string"},
+      "status": {"enum": ["pending", "in_progress", "completed", "deleted"], "type": "string"},
+      "subject": {"type": "string"},
+      "taskId": {"description": "The ID of the task to update", "type": "string"}
+    },
+    "required": ["taskId"],
+    "type": "object"
+  }
+}

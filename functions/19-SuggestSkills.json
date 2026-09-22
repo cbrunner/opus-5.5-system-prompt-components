@@ -1,0 +1,24 @@
+{
+  "description": "Render a card of standalone skills the user can add \u2014 org, shared, or Anthropic skills not yet enabled.",
+  "name": "SuggestSkills",
+  "parameters": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "contextLabel": {"maxLength": 128, "type": "string"},
+      "keywords": {
+        "description": "Topic keywords from the user's request.",
+        "items": {"type": "string"},
+        "maxItems": 8,
+        "minItems": 1,
+        "type": "array"
+      },
+      "trigger": {
+        "enum": ["user_asked", "proactive"],
+        "type": "string"
+      }
+    },
+    "required": ["keywords"],
+    "type": "object"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "description": "Create a structured task list for the current session. Use for complex multi-step work; skip trivial one-step tasks.",
+  "name": "TaskCreate",
+  "parameters": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "activeForm": {"description": "Present continuous form shown in spinner when in_progress", "type": "string"},
+      "description": {"description": "What needs to be done", "type": "string"},
+      "subject": {"description": "A brief title for the task", "type": "string"}
+    },
+    "required": ["subject", "description"],
+    "type": "object"
+  }
+}

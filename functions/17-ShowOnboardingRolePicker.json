@@ -1,0 +1,10 @@
+{
+  "description": "Render a clickable role-picker chip row during Cowork onboarding. Call with no args. Do NOT call this in normal conversation.",
+  "name": "ShowOnboardingRolePicker",
+  "parameters": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {},
+    "type": "object"
+  }
+}

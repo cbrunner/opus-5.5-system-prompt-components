@@ -1,0 +1,26 @@
+{
+  "description": "Show 1\u20136 web links as preview cards with title, source, and an optional snippet.",
+  "name": "mcp__widgets__link_preview_display_v0",
+  "parameters": {
+    "properties": {
+      "links": {
+        "items": {
+          "properties": {
+            "domain": {"type": "string"},
+            "snippet": {"type": "string"},
+            "title": {"type": "string"},
+            "url": {"type": "string"}
+          },
+          "required": ["url", "title"],
+          "type": "object"
+        },
+        "maxItems": 6,
+        "minItems": 1,
+        "type": "array"
+      },
+      "summary": {"type": "string"}
+    },
+    "required": ["links", "summary"],
+    "type": "object"
+  }
+}
