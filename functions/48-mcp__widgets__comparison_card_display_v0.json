@@ -1,0 +1,35 @@
+{
+  "description": "Show 2\u20133 products side-by-side in a comparison table with aligned attribute rows.",
+  "name": "mcp__widgets__comparison_card_display_v0",
+  "parameters": {
+    "properties": {
+      "products": {
+        "items": {
+          "properties": {
+            "attributes": {
+              "items": {
+                "properties": {"label": {"type": "string"}, "value": {"type": "string"}},
+                "required": ["label", "value"],
+                "type": "object"
+              },
+              "maxItems": 8,
+              "minItems": 2,
+              "type": "array"
+            },
+            "name": {"type": "string"},
+            "price": {"type": "string"},
+            "url": {"type": "string"}
+          },
+          "required": ["name", "attributes"],
+          "type": "object"
+        },
+        "maxItems": 3,
+        "minItems": 2,
+        "type": "array"
+      },
+      "summary": {"type": "string"}
+    },
+    "required": ["products", "summary"],
+    "type": "object"
+  }
+}

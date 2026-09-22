@@ -1,0 +1,22 @@
+{
+  "description": "Show a numbered, step-by-step walkthrough for fixing or setting something up.",
+  "name": "mcp__widgets__step_card_display_v0",
+  "parameters": {
+    "properties": {
+      "steps": {
+        "items": {
+          "properties": {"description": {"type": "string"}, "title": {"type": "string"}},
+          "required": ["title", "description"],
+          "type": "object"
+        },
+        "maxItems": 8,
+        "minItems": 2,
+        "type": "array"
+      },
+      "summary": {"type": "string"},
+      "view": {"enum": ["stepper", "list"], "type": "string"}
+    },
+    "required": ["steps", "summary"],
+    "type": "object"
+  }
+}

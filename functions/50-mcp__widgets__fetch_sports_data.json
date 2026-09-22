@@ -1,0 +1,14 @@
+{
+  "description": "Fetch current, upcoming or recent sports data including scores, standings, and detailed game stats.",
+  "name": "mcp__widgets__fetch_sports_data",
+  "parameters": {
+    "properties": {
+      "data_type": {"enum": ["scores", "standings", "game_stats"], "type": "string"},
+      "game_id": {"type": "string"},
+      "league": {"type": "string"},
+      "team": {"type": "string"}
+    },
+    "required": ["data_type", "league"],
+    "type": "object"
+  }
+}

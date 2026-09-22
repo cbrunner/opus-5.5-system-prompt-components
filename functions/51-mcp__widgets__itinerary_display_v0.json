@@ -1,0 +1,34 @@
+{
+  "description": "Show a day-by-day travel timeline with tabbed days and a list of stops per day.",
+  "name": "mcp__widgets__itinerary_display_v0",
+  "parameters": {
+    "properties": {
+      "days": {
+        "items": {
+          "properties": {
+            "day_label": {"type": "string"},
+            "stops": {
+              "items": {
+                "properties": {"blurb": {"type": "string"}, "name": {"type": "string"}, "time": {"type": "string"}},
+                "required": ["name"],
+                "type": "object"
+              },
+              "maxItems": 12,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": ["day_label", "stops"],
+          "type": "object"
+        },
+        "maxItems": 7,
+        "minItems": 1,
+        "type": "array"
+      },
+      "summary": {"type": "string"},
+      "title": {"type": "string"}
+    },
+    "required": ["days", "summary"],
+    "type": "object"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "description": "Show a structured set of distinct approaches, each with concrete next steps.",
+  "name": "mcp__widgets__options_card_display_v0",
+  "parameters": {
+    "properties": {
+      "options": {
+        "items": {
+          "properties": {
+            "bullets": {"items": {"type": "string"}, "maxItems": 8, "minItems": 2, "type": "array"},
+            "description": {"type": "string"},
+            "title": {"type": "string"}
+          },
+          "required": ["title", "description", "bullets"],
+          "type": "object"
+        },
+        "maxItems": 8,
+        "minItems": 2,
+        "type": "array"
+      },
+      "summary": {"type": "string"},
+      "title": {"type": "string"}
+    },
+    "required": ["options", "summary"],
+    "type": "object"
+  }
+}

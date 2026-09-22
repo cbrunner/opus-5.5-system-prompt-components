@@ -1,0 +1,26 @@
+{
+  "description": "Search for places using Google Places. Display results via places_map_display_v0.",
+  "name": "mcp__widgets__places_search",
+  "parameters": {
+    "properties": {
+      "location_bias_lat": {"type": "number"},
+      "location_bias_lng": {"type": "number"},
+      "location_bias_radius": {"type": "number"},
+      "queries": {
+        "items": {
+          "properties": {
+            "max_results": {"default": 5, "maximum": 10, "minimum": 1, "type": "integer"},
+            "query": {"type": "string"}
+          },
+          "required": ["query"],
+          "type": "object"
+        },
+        "maxItems": 10,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": ["queries"],
+    "type": "object"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "description": "Draft a message (email, Slack, or text) with goal-oriented approaches.",
+  "name": "mcp__widgets__message_compose_v1",
+  "parameters": {
+    "properties": {
+      "kind": {"enum": ["email", "textMessage", "other"], "type": "string"},
+      "summary_title": {"type": "string"},
+      "variants": {
+        "items": {
+          "properties": {"body": {"type": "string"}, "label": {"type": "string"}, "subject": {"type": "string"}},
+          "required": ["label", "body"],
+          "type": "object"
+        },
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": ["kind", "variants"],
+    "type": "object"
+  }
+}

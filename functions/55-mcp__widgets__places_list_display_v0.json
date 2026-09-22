@@ -1,0 +1,25 @@
+{
+  "description": "Show a stacked list of places, each with photos and a short description. Not for Google Places results.",
+  "name": "mcp__widgets__places_list_display_v0",
+  "parameters": {
+    "properties": {
+      "places": {
+        "items": {
+          "properties": {
+            "description": {"type": "string"},
+            "name": {"type": "string"},
+            "tips": {"items": {"type": "string"}, "maxItems": 3, "type": "array"}
+          },
+          "required": ["name"],
+          "type": "object"
+        },
+        "maxItems": 8,
+        "minItems": 1,
+        "type": "array"
+      },
+      "summary": {"type": "string"}
+    },
+    "required": ["places", "summary"],
+    "type": "object"
+  }
+}
