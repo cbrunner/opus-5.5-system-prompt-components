@@ -1,0 +1,14 @@
+{
+  "description": "Create or update a memory document with full content. Overwrites the entire document. Always pass if_version.",
+  "name": "mcp__memory__memory_write",
+  "parameters": {
+    "additionalProperties": false,
+    "properties": {
+      "content": {"description": "Full text content to write (UTF-8). Replaces the entire document.", "type": "string"},
+      "if_version": {"description": "12-character version token, or the literal word new for a new file.", "type": "string"},
+      "path": {"description": "Path of the document to create or update.", "type": "string"}
+    },
+    "required": ["content", "if_version", "path"],
+    "type": "object"
+  }
+}

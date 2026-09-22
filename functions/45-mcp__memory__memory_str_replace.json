@@ -1,0 +1,15 @@
+{
+  "description": "Edit a memory document by replacing one exact text match. Always pass if_version.",
+  "name": "mcp__memory__memory_str_replace",
+  "parameters": {
+    "additionalProperties": false,
+    "properties": {
+      "if_version": {"description": "12-character version token from the most recent read or write.", "type": "string"},
+      "new_str": {"description": "Replacement text. Empty string deletes the match.", "type": "string"},
+      "old_str": {"description": "Exact text to replace. Must match in exactly one place.", "minLength": 1, "type": "string"},
+      "path": {"description": "Path of the memory document to edit.", "type": "string"}
+    },
+    "required": ["if_version", "new_str", "old_str", "path"],
+    "type": "object"
+  }
+}

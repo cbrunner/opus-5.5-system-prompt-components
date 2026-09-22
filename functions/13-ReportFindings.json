@@ -1,0 +1,33 @@
+{
+  "description": "Report code-review findings as a typed list so the host UI can render them. Use only when active code-review instructions tell you to report findings with this tool.",
+  "name": "ReportFindings",
+  "parameters": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "findings": {
+        "description": "Verified findings, most-severe first; empty if none survived",
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "category": {"description": "Short kebab-case slug of the finding type", "maxLength": 40, "type": "string"},
+            "failure_scenario": {"description": "Concrete inputs/state to wrong output/crash", "type": "string"},
+            "file": {"description": "Repo-relative path of the file the finding is in", "type": "string"},
+            "line": {"description": "1-indexed line the finding anchors to", "type": "integer"},
+            "outcome": {"enum": ["fixed", "skipped", "no_change_needed"], "type": "string"},
+            "short_summary": {"maxLength": 60, "type": "string"},
+            "summary": {"description": "One-sentence statement of the defect", "type": "string"},
+            "verdict": {"enum": ["CONFIRMED", "PLAUSIBLE"], "type": "string"}
+          },
+          "required": ["file", "summary", "failure_scenario"],
+          "type": "object"
+        },
+        "maxItems": 32,
+        "type": "array"
+      },
+      "level": {"enum": ["low", "medium", "high", "xhigh", "max"], "type": "string"}
+    },
+    "required": ["findings"],
+    "type": "object"
+  }
+}

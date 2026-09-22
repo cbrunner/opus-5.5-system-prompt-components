@@ -1,0 +1,16 @@
+{
+  "description": "Send files to the user. Use this for any file the user would want to see. Send deliverables as they are produced. Set status on every call: proactive when initiating, normal when replying.",
+  "name": "SendUserFile",
+  "parameters": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "caption": {"description": "Optional short caption for the file(s).", "type": "string"},
+      "display": {"enum": ["render", "attach"], "type": "string"},
+      "files": {"description": "File paths to send. Always pass an array.", "items": {"type": "string"}, "minItems": 1, "type": "array"},
+      "status": {"enum": ["normal", "proactive"], "type": "string"}
+    },
+    "required": ["files", "status"],
+    "type": "object"
+  }
+}

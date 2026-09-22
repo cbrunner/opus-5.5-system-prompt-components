@@ -1,0 +1,15 @@
+{
+  "description": "Schedule a message to be delivered back into THIS SESSION at a future time. Delivery survives container restarts. Granularity is one minute.",
+  "name": "mcp__claude-code-remote__send_later",
+  "parameters": {
+    "properties": {
+      "at": {"description": "RFC3339 timestamp for the fire time. Mutually exclusive with delay_minutes.", "type": "string"},
+      "delay_minutes": {"description": "Fire this many minutes from now. Minimum 1.", "minimum": 1, "type": "integer"},
+      "initiation": {"enum": ["human_request", "human_schedule", "own_followup", "own_initiative"], "type": "string"},
+      "message": {"description": "The text to deliver as a user turn.", "type": "string"},
+      "name": {"description": "Short human-readable label for this reminder.", "type": "string"}
+    },
+    "required": ["message"],
+    "type": "object"
+  }
+}

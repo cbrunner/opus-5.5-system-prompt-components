@@ -1,0 +1,14 @@
+{
+  "description": "Add text to the end of a memory document without resending its content. Always pass if_version.",
+  "name": "mcp__memory__memory_append",
+  "parameters": {
+    "additionalProperties": false,
+    "properties": {
+      "content": {"description": "Text to add at the end of the file (UTF-8).", "minLength": 1, "type": "string"},
+      "if_version": {"description": "12-character version token, or the literal word new for a new file.", "type": "string"},
+      "path": {"description": "Path of the memory document to append to.", "type": "string"}
+    },
+    "required": ["content", "if_version", "path"],
+    "type": "object"
+  }
+}
