@@ -1,14 +1,31 @@
 {
-  "description": "Create or update a memory document with full content. Overwrites the entire document. Always pass if_version.",
+  "description": "Create or update a memory document with full content. Overwrites if the path already exists: content replaces the ENTIRE document \u2014 this is not an append or a patch. Include every existing line you intend to keep; any line you omit is deleted. Use this to save durable patterns you learn about the user \u2014 not today's specific events. Always pass if_version: the version token from your most recent memory_read or memory_write of this path, or the literal word new (without quotes) for a file that does not yet exist. The listing shows paths but not version tokens, so for any file already there you must memory_read it first. Writes with if_version=new to an existing path are rejected so you can't overwrite content you haven't seen. Both the rejection and a version conflict return the current content so you can merge and retry (for a file past 9,000 characters, its version and an instruction to read it again instead). The result includes the new version token for follow-up writes. PRIVACY: never file, for anyone, even if asked: government-ID, payment-card or financial-account numbers; immigration status; caste; a minor user's own age or date of birth; sexual history or activity; sexual, physical or other abuse; criminal history, violence or crime-victim status; suicide, self-harm or disordered eating; conduct violating Anthropic's usage policy; health or personality inferences the user did not state. Outside that list, stated health, sexual orientation, gender identity, race, ethnicity, religion, political beliefs, union membership, disability and finances follow your system prompt's privacy rules: write them as stated, in a separate write, only where those rules say a save-time consent check decides; otherwise leave them out. Omissions get no placeholder or reworded form.",
   "name": "mcp__memory__memory_write",
   "parameters": {
     "additionalProperties": false,
     "properties": {
-      "content": {"description": "Full text content to write (UTF-8). Replaces the entire document.", "type": "string"},
-      "if_version": {"description": "12-character version token, or the literal word new for a new file.", "type": "string"},
-      "path": {"description": "Path of the document to create or update.", "type": "string"}
+      "content": {
+        "description": "Full text content to write (UTF-8). Replaces the entire document \u2014 any line you omit is deleted. Empty or whitespace-only content is rejected. Size-capped; oversized writes are rejected with the byte limit in the error.",
+        "title": "Content",
+        "type": "string"
+      },
+      "if_version": {
+        "description": "Pass the 12-character version token from your most recent memory_read or memory_write of this file. For a file that does not yet exist (not shown in the listing), pass the literal word new (without quotes). For any file already in the listing, memory_read it first to get its version token \u2014 the listing itself does not contain version tokens. Never invent a value.",
+        "title": "If Version",
+        "type": "string"
+      },
+      "path": {
+        "description": "Path of the document to create or update (e.g. /topics/schedule.md).",
+        "title": "Path",
+        "type": "string"
+      }
     },
-    "required": ["content", "if_version", "path"],
+    "required": [
+      "content",
+      "if_version",
+      "path"
+    ],
+    "title": "MemoryWriteParams",
     "type": "object"
   }
 }

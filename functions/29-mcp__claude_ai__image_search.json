@@ -1,21 +1,27 @@
 {
-  "description": "Default to using image search for any query where visuals would enhance the user's understanding; skip when the deliverable is primarily textual.",
+  "description": "Default to using image search for any query where visuals would enhance the user's understanding; skip when the deliverable is primarily textual e.g. for pure text tasks, code, technical support.",
   "name": "mcp__claude_ai__image_search",
   "parameters": {
     "additionalProperties": false,
+    "description": "Input parameters for the image_search tool.",
     "properties": {
       "max_results": {
         "description": "Maximum number of images to return (default: 3, minimum: 3)",
         "maximum": 5,
         "minimum": 3,
+        "title": "Max Results",
         "type": "integer"
       },
       "query": {
         "description": "Search query to find relevant images",
+        "title": "Query",
         "type": "string"
       }
     },
-    "required": ["query"],
+    "required": [
+      "query"
+    ],
+    "title": "ImageSearchToolParams",
     "type": "object"
   }
 }

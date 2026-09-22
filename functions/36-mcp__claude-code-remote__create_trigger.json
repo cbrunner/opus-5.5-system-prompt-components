@@ -1,16 +1,75 @@
 {
-  "description": "Create a scheduled task. Each firing starts a fresh session. Use send_later for a reminder in THIS conversation.",
+  "description": "Create a scheduled task. Each firing starts a FRESH SESSION in this environment, never this conversation \u2014 the user views each run independently. To schedule a one-off reminder that should arrive back in THIS conversation, use send_later instead. Each task has its own approval setting, reported in the result as derived_state.permission_mode: \"auto\" means its runs go ahead without waiting for approval; absent means a run stops whenever an action needs approval, and a scheduled run usually has no one there to approve it. Left unset, a task takes this conversation's setting where the organization allows it. When you confirm the task, say in one sentence which setting it got; if its runs will ask, mention that the user can switch the task to automatic approval (\"Automatically approve\") in its settings. When telling the user what you did, call these \"scheduled tasks\" (or whatever user is calling them) \u2014 never \"triggers\", \"routines\", or \"cron jobs\"; those are internal API names.",
   "name": "mcp__claude-code-remote__create_trigger",
   "parameters": {
     "properties": {
-      "cron_expression": {"description": "5-field cron in UTC. Mutually exclusive with run_once_at.", "type": "string"},
-      "environment_id": {"type": "string"},
-      "initiation": {"enum": ["human_request", "human_schedule", "own_followup", "own_initiative"], "type": "string"},
-      "name": {"type": "string"},
-      "prompt": {"description": "Message each firing sends.", "type": "string"},
-      "run_once_at": {"description": "RFC3339 one-shot fire time.", "type": "string"}
+      "cron_expression": {
+        "description": "Standard 5-field cron expression (minute hour day-of-month month day-of-week), evaluated in UTC \u2014 convert local times to UTC first, using the offset currently in effect; if the conversion crosses midnight, shift the day fields too \u2014 day-of-week and/or day-of-month, whichever is set (e.g. weekdays at 5pm in UTC-07:00 is 0 0 * * 2-6). Minimum interval is normally hourly (some projects allow shorter); a too-frequent schedule is rejected and the error names the minimum. For hourly or every-N-hours schedules, use minute 0 (e.g. '0 * * * *', '0 */4 * * *') \u2014 the server anchors it to the creation minute ('hourly starting now'), so scheduled tasks spread across the hour instead of all firing at :00; all other schedules are stored verbatim. Mutually exclusive with run_once_at. Omit both for a poke-only scheduled task that never fires on its own schedule.",
+        "type": "string"
+      },
+      "environment_id": {
+        "description": "Environment ID \u2014 a tagged ID starting with 'env_' (or 'ccpool_' for self-hosted pools). Defaults to the calling session's environment. Required when calling from outside a CCR session (no session context to inherit from). Do NOT invent a value \u2014 call list_environments to get the user's real environment_ids.",
+        "type": "string"
+      },
+      "folders": {
+        "description": "Absolute folder paths on the user's computer that this task's runs will read or write, e.g. [\"/Users/alex/Projects/acme\"]. Only meaningful with requires_local_device=true \u2014 a task that lists folders needs the computer, and the call is refused without it. You normally OMIT this: when the user approves the task, the app attaches the folders already connected to this conversation. List a folder here only when the task needs one that is NOT connected to this conversation, and only after confirming it exists on the computer: get_device_info gives the connected folders as absolute paths and the NAMES of the top-level folders under the user's home, and device_list_dir gives the names inside a folder \u2014 build the absolute path from the home prefix you can see in a connected folder plus names you were shown, one level at a time. Never guess a name you have not seen listed. Every folder you list is shown to the user on the approval card before they approve, and the task's runs can use the remote-devices file tools only under the approved folders. At most 16 absolute paths, no trailing separator; the folders are attached only when the task ends up requiring the computer.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "initiation": {
+        "description": "Who wanted this: human_request \u2014 a person asked you to set this up now; human_schedule \u2014 a schedule a person set (e.g. an earlier firing) told you to; own_followup \u2014 your own check-in or follow-up on work you are already doing; own_initiative \u2014 you decided on your own that this should exist.",
+        "enum": [
+          "human_request",
+          "human_schedule",
+          "own_followup",
+          "own_initiative"
+        ],
+        "type": "string"
+      },
+      "name": {
+        "description": "Human-readable scheduled task name.",
+        "type": "string"
+      },
+      "notifications": {
+        "additionalProperties": false,
+        "description": "Completion notifications for this scheduled task. push sends to the owner's phone when a run finishes with something noteworthy; email sends the same summary to their inbox. If omitted, the setting stays unset and the server default applies at fire time. Passing this sets an explicit per-task choice \u2014 specify every channel you want on (e.g. {push:true, email:true} for both; {email:true} alone means email-only, push off). Pass {} to opt out of all channels.",
+        "properties": {
+          "email": {
+            "type": "boolean"
+          },
+          "push": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "permission_mode": {
+        "description": "How runs of this task handle approvals. Leave unset: the task then follows this conversation's own approval setting. Pass \"default\" only when the user wants this task's runs to ask before acting even if this conversation does not. Automatic approval cannot be requested here: a conversation that already runs without asking passes that on when this is unset, and otherwise the user turns it on in the task's settings once it exists.",
+        "enum": [
+          "default"
+        ],
+        "type": "string"
+      },
+      "prompt": {
+        "description": "The message each firing sends. Write it as a complete standalone instruction \u2014 every firing starts a fresh session with no memory of this conversation.",
+        "type": "string"
+      },
+      "requires_local_device": {
+        "description": "Set true when this task's runs need the user's computer \u2014 that is, when they will use ANY local-device tool: running commands on the computer (device bash), driving its Chrome browser, or reading or writing its local files \u2014 not just 'computer use' tools. A task that declares this can be set to require that computer when the user approves it, so its runs happen with that computer's tools available. Omit the field (or set false) for a task that runs entirely in the cloud \u2014 it gets no access to the computer. When in doubt, set true: this tool cannot make a task require the computer after it is created (the user can, later, by turning on \"Require this computer\" for the task in the Claude desktop app on that computer \u2014 until they do, a task that needed the computer and did not declare it runs in the cloud without it).",
+        "type": "boolean"
+      },
+      "run_once_at": {
+        "description": "RFC3339 timestamp for a one-shot fire (e.g. 2026-04-20T17:00:00Z). Must be in the future. Mutually exclusive with cron_expression \u2014 set one or the other, not both. After the one-shot fires the scheduled task disables itself with ended_reason=run_once_fired.",
+        "type": "string"
+      }
     },
-    "required": ["name", "prompt"],
+    "required": [
+      "name",
+      "prompt",
+      "initiation"
+    ],
     "type": "object"
   }
 }

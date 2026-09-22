@@ -3,14 +3,32 @@
   "name": "mcp__Claude_Docs__batch",
   "parameters": {
     "properties": {
-      "batch": {"type": "array"},
+      "batch": {
+        "type": "array"
+      },
       "container": {
-        "properties": {"create": {"type": "object"}, "id": {"type": "string"}, "kind": {"type": "string"}},
-        "required": ["kind"],
+        "properties": {
+          "create": {
+            "type": "object"
+          },
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind"
+        ],
         "type": "object"
       },
-      "opId": {"type": "string"},
-      "verbose": {"type": "boolean"}
+      "opId": {
+        "type": "string"
+      },
+      "verbose": {
+        "type": "boolean"
+      }
     },
     "type": "object"
   }

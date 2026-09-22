@@ -1,26 +1,46 @@
 {
-  "description": "Show your single best product pick as one rich card with a name, optional price, and a blurb.",
+  "description": "Show your single best product pick as one rich card with a name, optional price, and a blurb on why it's the pick. Use this for shopping questions where the answer is one clear recommendation (e.g., 'what's the best entry-level espresso machine', 'just tell me which one to get').\n\nDON'T use this card when:\n- The user wants several options to browse \u2014 use product_carousel_display_v0.\n- The user is weighing named options on shared criteria \u2014 use comparison_card_display_v0.\n- The blurb would just restate the name, or it's not a purchasable product \u2014 write prose.\n\nThe blurb can run up to a paragraph \u2014 say why this is the pick and what trade-offs come with it. Don't re-describe the product in your prose. Photos are added automatically \u2014 don't include image URLs.",
   "name": "mcp__widgets__featured_card_display_v0",
   "parameters": {
     "properties": {
       "products": {
         "items": {
           "properties": {
-            "blurb": {"type": "string"},
-            "name": {"type": "string"},
-            "price": {"type": "string"},
-            "url": {"type": "string"}
+            "blurb": {
+              "description": "Up to one paragraph on why this is the pick and any trade-offs. Don't restate the name or price.",
+              "type": "string"
+            },
+            "name": {
+              "description": "Product name (a few words).",
+              "type": "string"
+            },
+            "price": {
+              "description": "Display price with currency, e.g. '$549'. Omit when not applicable or unknown.",
+              "type": "string"
+            },
+            "url": {
+              "description": "Absolute https URL of the product page. Omit if you don't have a real one \u2014 never fabricate a link.",
+              "type": "string"
+            }
           },
-          "required": ["name"],
+          "required": [
+            "name"
+          ],
           "type": "object"
         },
         "maxItems": 1,
         "minItems": 1,
         "type": "array"
       },
-      "summary": {"type": "string"}
+      "summary": {
+        "description": "One short sentence (under 15 words) naming what this card shows, for surfaces that can't render it. Don't repeat the products. Write this last.",
+        "type": "string"
+      }
     },
-    "required": ["products", "summary"],
+    "required": [
+      "products",
+      "summary"
+    ],
     "type": "object"
   }
 }

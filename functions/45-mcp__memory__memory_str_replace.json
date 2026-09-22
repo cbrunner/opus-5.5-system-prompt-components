@@ -1,15 +1,38 @@
 {
-  "description": "Edit a memory document by replacing one exact text match. Always pass if_version.",
+  "description": "Edit a memory document by replacing one exact text match. old_str must match the file content in exactly one place, including whitespace and newlines \u2014 zero or multiple matches are rejected (widen old_str with surrounding text until it is unique). new_str replaces it; pass an empty new_str to delete the matched text. Cheaper than memory_write for small edits \u2014 you send only the text that changes, not the whole file. Always pass if_version: the version token from your most recent memory_read or memory_write of this path; edits require one, so memory_read the file first if you do not have it. A version conflict or a failed match returns the current content so you can retry in one turn (for a file past 9,000 characters, its version and an instruction to read it again instead). The result includes the new version token for follow-up edits. PRIVACY: never file, for anyone, even if asked: government-ID, payment-card or financial-account numbers; immigration status; caste; a minor user's own age or date of birth; sexual history or activity; sexual, physical or other abuse; criminal history, violence or crime-victim status; suicide, self-harm or disordered eating; conduct violating Anthropic's usage policy; health or personality inferences the user did not state. Outside that list, stated health, sexual orientation, gender identity, race, ethnicity, religion, political beliefs, union membership, disability and finances follow your system prompt's privacy rules: write them as stated, in a separate write, only where those rules say a save-time consent check decides; otherwise leave them out. Omissions get no placeholder or reworded form.",
   "name": "mcp__memory__memory_str_replace",
   "parameters": {
     "additionalProperties": false,
     "properties": {
-      "if_version": {"description": "12-character version token from the most recent read or write.", "type": "string"},
-      "new_str": {"description": "Replacement text. Empty string deletes the match.", "type": "string"},
-      "old_str": {"description": "Exact text to replace. Must match in exactly one place.", "minLength": 1, "type": "string"},
-      "path": {"description": "Path of the memory document to edit.", "type": "string"}
+      "if_version": {
+        "description": "Pass the 12-character version token from your most recent memory_read or memory_write of this file. Required \u2014 if you do not have one, memory_read the file first. Never invent a value.",
+        "title": "If Version",
+        "type": "string"
+      },
+      "new_str": {
+        "description": "Replacement text. Pass an empty string to delete the matched text.",
+        "title": "New Str",
+        "type": "string"
+      },
+      "old_str": {
+        "description": "Exact text to replace. Must match the file content in exactly one place, including whitespace and newlines \u2014 the edit is rejected on zero or multiple matches. Make it unique by including surrounding text.",
+        "minLength": 1,
+        "title": "Old Str",
+        "type": "string"
+      },
+      "path": {
+        "description": "Path of the memory document to edit (e.g. /topics/schedule.md).",
+        "title": "Path",
+        "type": "string"
+      }
     },
-    "required": ["if_version", "new_str", "old_str", "path"],
+    "required": [
+      "if_version",
+      "new_str",
+      "old_str",
+      "path"
+    ],
+    "title": "MemoryStrReplaceParams",
     "type": "object"
   }
 }

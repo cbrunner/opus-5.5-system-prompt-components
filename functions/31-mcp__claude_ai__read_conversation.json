@@ -1,10 +1,10 @@
 {
-  "description": "Open one past chat at a conversation_search hit and return a few turns around it. Pass conversation_id \"current\" to re-read earlier turns of this chat.",
+  "description": "Open one past chat at a conversation_search hit and return a few turns around it. Not for skimming whole chats. Pass conversation_id \"current\" to re-read earlier turns of this chat once they are no longer in your context.",
   "name": "mcp__claude_ai__read_conversation",
   "parameters": {
     "properties": {
       "conversation_id": {
-        "description": "The chat's UUID, or \"current\" for this chat. Never guess one.",
+        "description": "The chat's UUID from a tool result url or a claude.ai/chat/ link or id the person gave, or \"current\" for this chat. Never guess one.",
         "type": "string"
       },
       "max_turns": {
@@ -12,11 +12,13 @@
         "type": "integer"
       },
       "page_token": {
-        "description": "The hit's page_token, or next/prev page token. Omit to read from the beginning.",
+        "description": "The hit's page_token (opens at the match with its lead-in question), or next_page_token / prev_page_token for adjacent turns only. Omit to read from the beginning.",
         "type": "string"
       }
     },
-    "required": ["conversation_id"],
+    "required": [
+      "conversation_id"
+    ],
     "type": "object"
   }
 }

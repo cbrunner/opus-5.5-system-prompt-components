@@ -1,31 +1,147 @@
 {
-  "description": "Display a simple line, bar, or scatter chart inline. Prefer this over a custom visualizer for small datasets.",
+  "description": "Display a simple chart (line, bar, or scatter) inline in the chat, rendered natively by the app. Use this for quick, standard charts of a small dataset that is already in the conversation or that you just computed or looked up: a trend over time, a comparison across a handful of categories, or the relationship between two numeric variables. Typical triggers: the user pastes or describes some numbers and asks to \"plot\", \"chart\" or \"graph\" them; a short table you produced would be clearer as a line or bar chart; the user asks how a quantity changed over a period and you have the values.\n\nPrefer this tool over the Visualizer (the visualize server's show_widget tool) for these plain charts: it renders immediately, needs no code, and matches the app's design system. Use the Visualizer or an artifact instead when the request needs anything this tool cannot draw: pie, donut, stacked or area charts, annotations or callouts, multiple panels or dashboards, interactivity beyond basic tooltips, custom styling, maps or diagrams, very large datasets, or a visual the user wants to iterate on or download. Never draw the same chart with both tools.\n\nCapabilities and limits: \"style\" is \"line\", \"bar\" or \"scatter\". Line and bar charts plot each series' \"values\" against categorical x positions, so put the x labels (dates, names, buckets) in \"x_axis.data\", one label per value, in order. Scatter charts use per-series \"points\" with numeric x and y. At most 12 series and 2,000 points per series are drawn; keep charts small and legible (ideally 6 series or fewer). \"y_axis.scale\": \"log\" is supported; axis \"min\"/\"max\" set explicit bounds for line and scatter charts (bar charts always start at zero). Give the chart a short descriptive \"title\", and set an axis \"title\" to the units when that helps interpretation. Name each series when there is more than one so a legend is drawn. Per-series \"color\" and axis \"format\" are accepted for compatibility with the mobile apps but some clients ignore them, so never rely on color alone to carry meaning.\n\nDo not use this tool when a sentence or a small table answers the question, for a single number, or when you would have to invent or estimate the data. After the chart renders, state the key takeaway in one or two sentences instead of restating every data point.",
   "name": "mcp__widgets__chart_display_v0",
   "parameters": {
     "properties": {
       "series": {
+        "description": "Required. The data of one or more data series the chart is to display. This is an array so that you can provide multiple series at once (for a multi-line chart for example).",
         "items": {
+          "description": "The series for the chart",
           "properties": {
-            "color": {"type": "string"},
-            "name": {"type": "string"},
+            "color": {
+              "description": "Optional. The color that this will show up as in the graph. Provided in hex format. This is optional and you should not provide this unless there is a semantic color of this data that you think is important.",
+              "type": "string"
+            },
+            "name": {
+              "description": "Optional. The name of this data series. If a value is provided for this, it means the chart will be rendered with a Legend, and this name will be used in the legend.",
+              "type": "string"
+            },
             "points": {
+              "description": "The actual data of a 2d series. This is required for a scatter chart and should be a list of points. In a bar or line chart, this should be omitted and you should use 'values' instead.",
               "items": {
-                "properties": {"x": {"type": "number"}, "y": {"type": "number"}},
-                "required": ["x", "y"],
+                "description": "A point in the series",
+                "properties": {
+                  "x": {
+                    "description": "The x value of the point",
+                    "type": "number"
+                  },
+                  "y": {
+                    "description": "The y value of the point",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
                 "type": "object"
               },
               "type": "array"
             },
-            "values": {"items": {"type": "number"}, "type": "array"}
+            "values": {
+              "description": "The actual data of a 1d series. This is required for a bar or line chart and should be a list of numbers. In a scatter plot, this should be omitted and you should use 'points' instead.",
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            }
           },
           "type": "object"
         },
         "type": "array"
       },
-      "style": {"enum": ["line", "bar", "scatter"], "type": "string"},
-      "title": {"type": "string"}
+      "style": {
+        "description": "Required. The type of chart you want to create.",
+        "enum": [
+          "line",
+          "bar",
+          "scatter"
+        ],
+        "type": "string"
+      },
+      "title": {
+        "description": "Optional. The title of the chart. This text will be rendered at the top of the chart.",
+        "type": "string"
+      },
+      "x_axis": {
+        "description": "Optional. Settings to configure the x-axis (horizontal axis) of the chart.",
+        "properties": {
+          "data": {
+            "description": "Optional. This allows for a custom set of labels or values to be provided. This can be used if the axis is not numerical and text-based labels are required. If provided, the length of this array is expected to match the length of all of the data Series provided.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "format": {
+            "description": "Optional. This is a format string used to provide a custom formatting for the grid labels. This can be an f-style format string for numbers, and a strftime-style format string for dates.",
+            "type": "string"
+          },
+          "max": {
+            "description": "Optional. The max value of the range that this axis shows in the chart. If unspecified, an optimal maximum will be calculated from the data provided.",
+            "type": "number"
+          },
+          "min": {
+            "description": "Optional. The min value of the range that this axis shows in the chart. If unspecified, an optimal minimum will be calculated from the data provided.",
+            "type": "number"
+          },
+          "scale": {
+            "description": "Optional. Whether the axis should follow a log scale or a linear scale. Defaults to linear.",
+            "enum": [
+              "linear",
+              "log"
+            ],
+            "type": "string"
+          },
+          "title": {
+            "description": "Optional. The \"title\" of the axis. This is usually used to denote the units of the axis. Only provide this if it is likely to be needed to interpret the chart correctly.",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "y_axis": {
+        "description": "Optional. Settings to configure the y-axis (vertical axis) of the chart.",
+        "properties": {
+          "data": {
+            "description": "Optional. This allows for a custom set of labels or values to be provided. This can be used if the axis is not numerical and text-based labels are required. If provided, the length of this array is expected to match the length of all of the data Series provided.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "format": {
+            "description": "Optional. This is a format string used to provide a custom formatting for the grid labels. This can be an f-style format string for numbers, and a strftime-style format string for dates.",
+            "type": "string"
+          },
+          "max": {
+            "description": "Optional. The max value of the range that this axis shows in the chart. If unspecified, an optimal maximum will be calculated from the data provided.",
+            "type": "number"
+          },
+          "min": {
+            "description": "Optional. The min value of the range that this axis shows in the chart. If unspecified, an optimal minimum will be calculated from the data provided.",
+            "type": "number"
+          },
+          "scale": {
+            "description": "Optional. Whether the axis should follow a log scale or a linear scale. Defaults to linear.",
+            "enum": [
+              "linear",
+              "log"
+            ],
+            "type": "string"
+          },
+          "title": {
+            "description": "Optional. The \"title\" of the axis. This is usually used to denote the units of the axis. Only provide this if it is likely to be needed to interpret the chart correctly.",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
     },
-    "required": ["series", "style"],
+    "required": [
+      "series",
+      "style"
+    ],
     "type": "object"
   }
 }

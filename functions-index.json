@@ -1,0 +1,443 @@
+[
+  {
+    "n": 1,
+    "name": "Agent",
+    "file": "01-Agent.json",
+    "chars": 2540,
+    "description": "Launch a new agent to handle complex, multi-step tasks. Each agent type has specific capabilities and tools available to it."
+  },
+  {
+    "n": 2,
+    "name": "Artifact",
+    "file": "02-Artifact.json",
+    "chars": 32977,
+    "description": "The Artifact tool renders an HTML file as an Artifact: a web page hosted on claude.ai that is private by default. Claude uses it when a page would be clearer than text in the conve"
+  },
+  {
+    "n": 3,
+    "name": "AskUserQuestion",
+    "file": "03-AskUserQuestion.json",
+    "chars": 4328,
+    "description": "Use this tool only when you are blocked on a decision that is genuinely the user's to make: one you cannot resolve from the request, the code, or sensible defaults."
+  },
+  {
+    "n": 4,
+    "name": "Bash",
+    "file": "04-Bash.json",
+    "chars": 2665,
+    "description": "Executes a bash command and returns its output."
+  },
+  {
+    "n": 5,
+    "name": "Edit",
+    "file": "05-Edit.json",
+    "chars": 999,
+    "description": "Performs exact string replacement in a file."
+  },
+  {
+    "n": 6,
+    "name": "Glob",
+    "file": "06-Glob.json",
+    "chars": 752,
+    "description": "Fast file pattern matching. Supports glob patterns like \"**/*.js\" or \"src/**/*.ts\". Returns matching file paths sorted by modification time."
+  },
+  {
+    "n": 7,
+    "name": "Grep",
+    "file": "07-Grep.json",
+    "chars": 3314,
+    "description": "Content search built on ripgrep. Prefer this over `grep`/`rg` via Bash \u2014 results integrate with the permission UI and file links."
+  },
+  {
+    "n": 8,
+    "name": "ListAgents",
+    "file": "08-ListAgents.json",
+    "chars": 1174,
+    "description": "Lists agents you can SendMessage to \u2014 in-process subagents you spawned, the teammates on your team, other local Claude sessions on this machine, your Claude sessions running in the"
+  },
+  {
+    "n": 9,
+    "name": "propose_skills",
+    "file": "09-propose_skills.json",
+    "chars": 2806,
+    "description": "Surface recurring multi-step procedures from this session as skill proposals. Render-only \u2014 calling this shows a review card in the conversation; it does not write any files or cre"
+  },
+  {
+    "n": 10,
+    "name": "Read",
+    "file": "10-Read.json",
+    "chars": 1627,
+    "description": "Reads a file from the local filesystem."
+  },
+  {
+    "n": 11,
+    "name": "ReadNotifications",
+    "file": "11-ReadNotifications.json",
+    "chars": 1132,
+    "description": "Read the notifications queued for this session \u2014 GitHub activity on subscribed PRs, scheduled triggers (including check-ins you scheduled yourself), and messages from other Claude "
+  },
+  {
+    "n": 12,
+    "name": "RefreshMcpTools",
+    "file": "12-RefreshMcpTools.json",
+    "chars": 894,
+    "description": "Re-query the tool lists of connected MCP servers and update the available tools."
+  },
+  {
+    "n": 13,
+    "name": "ReportFindings",
+    "file": "13-ReportFindings.json",
+    "chars": 2271,
+    "description": "Report code-review findings as a typed list so the host UI can render them. Use this only when the active code-review instructions tell you to report findings with this tool; other"
+  },
+  {
+    "n": 14,
+    "name": "ScheduleWakeup",
+    "file": "14-ScheduleWakeup.json",
+    "chars": 4665,
+    "description": "Schedule when to resume work in /loop dynamic mode \u2014 the user invoked /loop without an interval, asking you to self-pace iterations of a specific task."
+  },
+  {
+    "n": 15,
+    "name": "SendUserFile",
+    "file": "15-SendUserFile.json",
+    "chars": 3231,
+    "description": "Send files to the user. Use this for any file the user would want to see \u2014 a generated diagram, a report, a screenshot, a built artifact \u2014 and you want it surfaced, not just mentio"
+  },
+  {
+    "n": 16,
+    "name": "SendUserMessage",
+    "file": "16-SendUserMessage.json",
+    "chars": 656,
+    "description": "Send a message the user will read verbatim. Use this for content they need to see exactly as written between tool calls \u2014 a generated code snippet, a specific value, a direct reply"
+  },
+  {
+    "n": 17,
+    "name": "ShowOnboardingRolePicker",
+    "file": "17-ShowOnboardingRolePicker.json",
+    "chars": 998,
+    "description": "Render a clickable role-picker chip row during Cowork onboarding. Call this when asking the user what kind of work they do so they can pick their role and get a matching plugin ins"
+  },
+  {
+    "n": 18,
+    "name": "Skill",
+    "file": "18-Skill.json",
+    "chars": 1824,
+    "description": "Invoke a skill."
+  },
+  {
+    "n": 19,
+    "name": "SuggestSkills",
+    "file": "19-SuggestSkills.json",
+    "chars": 1548,
+    "description": "Render a card of standalone skills the user can add \u2014 org, shared, or Anthropic skills not yet enabled."
+  },
+  {
+    "n": 20,
+    "name": "TaskCreate",
+    "file": "20-TaskCreate.json",
+    "chars": 2853,
+    "description": "Use this tool to create a structured task list for your current coding session. This helps you track progress, organize complex tasks, and demonstrate thoroughness to the user."
+  },
+  {
+    "n": 21,
+    "name": "TaskUpdate",
+    "file": "21-TaskUpdate.json",
+    "chars": 3586,
+    "description": "Use this tool to update a task in the task list."
+  },
+  {
+    "n": 22,
+    "name": "ToolSearch",
+    "file": "22-ToolSearch.json",
+    "chars": 1464,
+    "description": "Fetches full schema definitions for deferred tools so they can be called."
+  },
+  {
+    "n": 23,
+    "name": "WebFetch",
+    "file": "23-WebFetch.json",
+    "chars": 1049,
+    "description": "Fetches a URL, converts the page to markdown, and answers `prompt` against it using a small fast model."
+  },
+  {
+    "n": 24,
+    "name": "WebSearch",
+    "file": "24-WebSearch.json",
+    "chars": 883,
+    "description": "Search the web. Returns result blocks with titles and URLs. US-only."
+  },
+  {
+    "n": 25,
+    "name": "Write",
+    "file": "25-Write.json",
+    "chars": 661,
+    "description": "Writes a file to the local filesystem, overwriting if one exists."
+  },
+  {
+    "n": 26,
+    "name": "mcp__claude_ai__conversation_search",
+    "file": "26-mcp__claude_ai__conversation_search.json",
+    "chars": 691,
+    "description": "Search through past user conversations to find relevant context and information"
+  },
+  {
+    "n": 27,
+    "name": "mcp__claude_ai__current_time",
+    "file": "27-mcp__claude_ai__current_time.json",
+    "chars": 503,
+    "description": "Returns the current date and time as an ISO 8601 timestamp with its UTC offset, in the person's time zone when it is known and otherwise in UTC. Claude has no clock of its own, so "
+  },
+  {
+    "n": 28,
+    "name": "mcp__claude_ai__end_conversation",
+    "file": "28-mcp__claude_ai__end_conversation.json",
+    "chars": 263,
+    "description": "Use this tool to end the conversation. This tool will close the conversation and prevent any further messages from being sent."
+  },
+  {
+    "n": 29,
+    "name": "mcp__claude_ai__image_search",
+    "file": "29-mcp__claude_ai__image_search.json",
+    "chars": 722,
+    "description": "Default to using image search for any query where visuals would enhance the user's understanding; skip when the deliverable is primarily textual e.g. for pure text tasks, code, tec"
+  },
+  {
+    "n": 30,
+    "name": "mcp__claude_ai__launch_extended_search_task",
+    "file": "30-mcp__claude_ai__launch_extended_search_task.json",
+    "chars": 3108,
+    "description": "The research tool (AKA compass or the launch_extended_search_task) calls a research agent to perform a comprehensive, agentic search through the web, the user\u2019s Google Drive, and o"
+  },
+  {
+    "n": 31,
+    "name": "mcp__claude_ai__read_conversation",
+    "file": "31-mcp__claude_ai__read_conversation.json",
+    "chars": 856,
+    "description": "Open one past chat at a conversation_search hit and return a few turns around it. Not for skimming whole chats. Pass conversation_id \"current\" to re-read earlier turns of this chat"
+  },
+  {
+    "n": 32,
+    "name": "mcp__claude_ai__recent_chats",
+    "file": "32-mcp__claude_ai__recent_chats.json",
+    "chars": 451,
+    "description": "List the user's most recently updated conversations"
+  },
+  {
+    "n": 33,
+    "name": "mcp__Claude_Docs__batch",
+    "file": "33-mcp__Claude_Docs__batch.json",
+    "chars": 411,
+    "description": "Create a doc, or apply several operations to one doc atomically."
+  },
+  {
+    "n": 34,
+    "name": "mcp__Claude_Docs__guide",
+    "file": "34-mcp__Claude_Docs__guide.json",
+    "chars": 479,
+    "description": "Docs guides: topic.instructions repeats the server instructions. Read it only if your client dropped them. Also topic.<name>, refusal.<code>. After a doc's birth \u2192 [\"topic.index\"]."
+  },
+  {
+    "n": 35,
+    "name": "mcp__Claude_Docs__update",
+    "file": "35-mcp__Claude_Docs__update.json",
+    "chars": 759,
+    "description": "Edit a tab's contents, rename a doc or tab, or change a stored value."
+  },
+  {
+    "n": 36,
+    "name": "mcp__claude-code-remote__create_trigger",
+    "file": "36-mcp__claude-code-remote__create_trigger.json",
+    "chars": 6746,
+    "description": "Create a scheduled task. Each firing starts a FRESH SESSION in this environment, never this conversation \u2014 the user views each run independently. To schedule a one-off reminder tha"
+  },
+  {
+    "n": 37,
+    "name": "mcp__claude-code-remote__delete_trigger",
+    "file": "37-mcp__claude-code-remote__delete_trigger.json",
+    "chars": 1188,
+    "description": "Delete a scheduled task. The scheduled task must belong to the calling session's account \u2014 deleting another account's scheduled task fails with not-found. Use this to undo a create"
+  },
+  {
+    "n": 38,
+    "name": "mcp__claude-code-remote__fire_trigger",
+    "file": "38-mcp__claude-code-remote__fire_trigger.json",
+    "chars": 1269,
+    "description": "Fire a scheduled task immediately, outside of its schedule. The scheduled task must belong to the calling session's account. Use this to kick off a scheduled task on demand \u2014 e.g. "
+  },
+  {
+    "n": 39,
+    "name": "mcp__claude-code-remote__list_triggers",
+    "file": "39-mcp__claude-code-remote__list_triggers.json",
+    "chars": 2796,
+    "description": "List scheduled tasks owned by this account. Use it to find trigger IDs (trig_...) for update_trigger and delete_trigger. From a thread in a Slack channel, only scheduled tasks that"
+  },
+  {
+    "n": 40,
+    "name": "mcp__claude-code-remote__send_later",
+    "file": "40-mcp__claude-code-remote__send_later.json",
+    "chars": 2059,
+    "description": "Schedule a message to be delivered back into THIS SESSION at a future time. The message arrives as an ordinary user turn, so you can use it to remind yourself to resume work, check"
+  },
+  {
+    "n": 41,
+    "name": "mcp__claude-code-remote__update_trigger",
+    "file": "41-mcp__claude-code-remote__update_trigger.json",
+    "chars": 4152,
+    "description": "Update a scheduled task's name, cron expression, enabled state, model, or prompt. Only provided fields are changed; omit a field to leave it as-is. The scheduled task must belong t"
+  },
+  {
+    "n": 42,
+    "name": "mcp__memory__memory_append",
+    "file": "42-mcp__memory__memory_append.json",
+    "chars": 2539,
+    "description": "Add text to the end of a memory document without resending its content. The appended text is placed on a new line after the existing content. Cheaper than memory_write for adding a"
+  },
+  {
+    "n": 43,
+    "name": "mcp__memory__memory_list",
+    "file": "43-mcp__memory__memory_list.json",
+    "chars": 1491,
+    "description": "List memory documents (optionally under a path prefix), sorted by path. Returns path, size, and last-updated time for each. Results are capped; use cursor to page through large sto"
+  },
+  {
+    "n": 44,
+    "name": "mcp__memory__memory_read",
+    "file": "44-mcp__memory__memory_read.json",
+    "chars": 648,
+    "description": "Read one or more memory documents. Returns each document's content and last-updated time. Pass a list of paths to read several files in a single call instead of one call per file."
+  },
+  {
+    "n": 45,
+    "name": "mcp__memory__memory_str_replace",
+    "file": "45-mcp__memory__memory_str_replace.json",
+    "chars": 2704,
+    "description": "Edit a memory document by replacing one exact text match. old_str must match the file content in exactly one place, including whitespace and newlines \u2014 zero or multiple matches are"
+  },
+  {
+    "n": 46,
+    "name": "mcp__memory__memory_write",
+    "file": "46-mcp__memory__memory_write.json",
+    "chars": 2871,
+    "description": "Create or update a memory document with full content. Overwrites if the path already exists: content replaces the ENTIRE document \u2014 this is not an append or a patch. Include every "
+  },
+  {
+    "n": 47,
+    "name": "mcp__widgets__chart_display_v0",
+    "file": "47-mcp__widgets__chart_display_v0.json",
+    "chars": 7244,
+    "description": "Display a simple chart (line, bar, or scatter) inline in the chat, rendered natively by the app. Use this for quick, standard charts of a small dataset that is already in the conve"
+  },
+  {
+    "n": 48,
+    "name": "mcp__widgets__comparison_card_display_v0",
+    "file": "48-mcp__widgets__comparison_card_display_v0.json",
+    "chars": 2092,
+    "description": "Show 2\u20133 products side-by-side in a comparison table with aligned attribute rows. Use this for shopping questions where the user is weighing a small set of named options against th"
+  },
+  {
+    "n": 49,
+    "name": "mcp__widgets__featured_card_display_v0",
+    "file": "49-mcp__widgets__featured_card_display_v0.json",
+    "chars": 1740,
+    "description": "Show your single best product pick as one rich card with a name, optional price, and a blurb on why it's the pick. Use this for shopping questions where the answer is one clear rec"
+  },
+  {
+    "n": 50,
+    "name": "mcp__widgets__fetch_sports_data",
+    "file": "50-mcp__widgets__fetch_sports_data.json",
+    "chars": 1849,
+    "description": "Use this tool whenever you need to fetch current, upcoming or recent sports data including scores, standings/rankings, and detailed game stats for the provided sports. If a user is"
+  },
+  {
+    "n": 51,
+    "name": "mcp__widgets__itinerary_display_v0",
+    "file": "51-mcp__widgets__itinerary_display_v0.json",
+    "chars": 2104,
+    "description": "Show a day-by-day travel timeline with tabbed days and a list of stops per day. Use this for trip-planning questions where the answer is an ordered itinerary across one or more day"
+  },
+  {
+    "n": 52,
+    "name": "mcp__widgets__link_preview_display_v0",
+    "file": "52-mcp__widgets__link_preview_display_v0.json",
+    "chars": 1751,
+    "description": "Show 1\u20136 web links as preview cards with title, source, and an optional snippet. Use this when surfacing external web sources the user should open \u2014 search results, citations, or '"
+  },
+  {
+    "n": 53,
+    "name": "mcp__widgets__message_compose_v1",
+    "file": "53-mcp__widgets__message_compose_v1.json",
+    "chars": 2464,
+    "description": "Draft a message (email, Slack, or text) with goal-oriented approaches based on what the user is trying to accomplish. Analyze the situation type (work disagreement, negotiation, fo"
+  },
+  {
+    "n": 54,
+    "name": "mcp__widgets__options_card_display_v0",
+    "file": "54-mcp__widgets__options_card_display_v0.json",
+    "chars": 1972,
+    "description": "Show a structured set of distinct approaches the user could take, each with concrete next steps. Use this for personal-health questions where the answer is 2\u20136 alternative options "
+  },
+  {
+    "n": 55,
+    "name": "mcp__widgets__places_list_display_v0",
+    "file": "55-mcp__widgets__places_list_display_v0.json",
+    "chars": 2040,
+    "description": "Show a stacked list of places, each with up to 3 photos and a short description. Use this when the answer is a browsable set of 2\u20138 specific places the user might visit \u2014 cafes, hi"
+  },
+  {
+    "n": 56,
+    "name": "mcp__widgets__places_map_display_v0",
+    "file": "56-mcp__widgets__places_map_display_v0.json",
+    "chars": 6521,
+    "description": "Display locations on a map with your recommendations and insider tips."
+  },
+  {
+    "n": 57,
+    "name": "mcp__widgets__places_search",
+    "file": "57-mcp__widgets__places_search.json",
+    "chars": 2570,
+    "description": "Search for places, businesses, restaurants, and attractions using Google Places."
+  },
+  {
+    "n": 58,
+    "name": "mcp__widgets__product_carousel_display_v0",
+    "file": "58-mcp__widgets__product_carousel_display_v0.json",
+    "chars": 1851,
+    "description": "Show a paged product carousel \u2014 one product per page, each with a 3-photo strip, name, price, and a short blurb. Use this for shopping questions where the user wants to look closel"
+  },
+  {
+    "n": 59,
+    "name": "mcp__widgets__quiz_display_v0",
+    "file": "59-mcp__widgets__quiz_display_v0.json",
+    "chars": 4148,
+    "description": "Generate an interactive multiple-choice quiz rendered as a card in the chat; the same questions can also be flipped through as flashcards (question on the front, correct answer and"
+  },
+  {
+    "n": 60,
+    "name": "mcp__widgets__recipe_display_v0",
+    "file": "60-mcp__widgets__recipe_display_v0.json",
+    "chars": 3651,
+    "description": "Display an interactive recipe with adjustable servings. Use when the user asks for a recipe, cooking instructions, or food preparation guide. The widget allows users to scale all i"
+  },
+  {
+    "n": 61,
+    "name": "mcp__widgets__step_card_display_v0",
+    "file": "61-mcp__widgets__step_card_display_v0.json",
+    "chars": 2023,
+    "description": "Show a numbered, step-by-step walkthrough for fixing or setting something up. Use this for tech-support and how-to questions where the answer is 3\u20138 ordered steps, each with a shor"
+  },
+  {
+    "n": 62,
+    "name": "mcp__widgets__translation_display_v0",
+    "file": "62-mcp__widgets__translation_display_v0.json",
+    "chars": 2292,
+    "description": "Show a translation card when the user asks how to say, write or translate a specific short passage (a message, sentence, phrase or a few lines) into another language. The card show"
+  },
+  {
+    "n": 63,
+    "name": "mcp__widgets__weather_fetch",
+    "file": "63-mcp__widgets__weather_fetch.json",
+    "chars": 1132,
+    "description": "Display weather information. Use the user's home location to determine temperature units: Fahrenheit for US users, Celsius for others.<br><br>USE THIS TOOL WHEN:<br>- User asks abo"
+  }
+]

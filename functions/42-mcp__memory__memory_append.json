@@ -1,14 +1,32 @@
 {
-  "description": "Add text to the end of a memory document without resending its content. Always pass if_version.",
+  "description": "Add text to the end of a memory document without resending its content. The appended text is placed on a new line after the existing content. Cheaper than memory_write for adding a fact to an existing file \u2014 you send only the addition. Always pass if_version: the version token from your most recent memory_read or memory_write of this path, or the literal word new (without quotes) to create the file. Appends with if_version=new to an existing path are rejected and return the current content so you can retry with its version (for a file past 9,000 characters, its version and an instruction to read it again instead). Do not append a fact the file already states \u2014 update it with memory_str_replace instead; files are size-capped, so prefer editing and condensing over repeated appends. The result includes the new version token. PRIVACY: never file, for anyone, even if asked: government-ID, payment-card or financial-account numbers; immigration status; caste; a minor user's own age or date of birth; sexual history or activity; sexual, physical or other abuse; criminal history, violence or crime-victim status; suicide, self-harm or disordered eating; conduct violating Anthropic's usage policy; health or personality inferences the user did not state. Outside that list, stated health, sexual orientation, gender identity, race, ethnicity, religion, political beliefs, union membership, disability and finances follow your system prompt's privacy rules: write them as stated, in a separate write, only where those rules say a save-time consent check decides; otherwise leave them out. Omissions get no placeholder or reworded form.",
   "name": "mcp__memory__memory_append",
   "parameters": {
     "additionalProperties": false,
     "properties": {
-      "content": {"description": "Text to add at the end of the file (UTF-8).", "minLength": 1, "type": "string"},
-      "if_version": {"description": "12-character version token, or the literal word new for a new file.", "type": "string"},
-      "path": {"description": "Path of the memory document to append to.", "type": "string"}
+      "content": {
+        "description": "Text to add at the end of the file (UTF-8). A newline separates it from the existing content. The merged file is size-capped; oversized results are rejected with the byte limit in the error.",
+        "minLength": 1,
+        "title": "Content",
+        "type": "string"
+      },
+      "if_version": {
+        "description": "Pass the 12-character version token from your most recent memory_read or memory_write of this file, or the literal word new (without quotes) for a file that does not yet exist. Never invent a value.",
+        "title": "If Version",
+        "type": "string"
+      },
+      "path": {
+        "description": "Path of the memory document to append to (e.g. /topics/schedule.md).",
+        "title": "Path",
+        "type": "string"
+      }
     },
-    "required": ["content", "if_version", "path"],
+    "required": [
+      "content",
+      "if_version",
+      "path"
+    ],
+    "title": "MemoryAppendParams",
     "type": "object"
   }
 }

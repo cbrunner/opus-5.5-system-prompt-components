@@ -25,16 +25,19 @@ Pliny's file is ~1.9 MB / ~21.5k lines because it is a full **session dump** (sy
 
 | Path | What it is |
 |---|---|
+| `00-system-prefix.md` | Full system slot (tools + instructions) |
 | `01-tool-calling-instructions.md` | How to emit `{antml:function_calls}` |
+| `02-functions-block.md` | Raw `<functions>` blob |
 | `03-deferred-tools-note.md` | Tools that load later |
+| `04-claude-behavior.md` | Persona, products, refusals, tone, cutoff |
+| `05-agentic-behavior.md` | Desktop / agent harness rules |
 | `06-between-agentic-and-memory.md` | Skills, container, device link, model id |
+| `07-user-memory.md` | Memory filesystem + privacy |
 | `08-parallel-tool-call-note.md` | Parallel vs dependent tool calls |
-| `functions/` | Pretty-printed JSON schema per tool |
+| `functions/` | One pretty-printed JSON schema per tool |
 | `claude_behavior/` | Subsections of `<claude_behavior>` |
 | `agentic_behavior/` | Subsections of `<agentic_behavior>` |
-| `user_memory/` | Memory-application rules |
-
-The giant assembled blobs (`00-system-prefix.md` 264k, `02-functions-block.md` 167k, plus combined `04`/`05`/`07`) are still easiest to read as lines 1–976 of [Pliny's original file](https://github.com/elder-plinius/CL4R1T4S/blob/main/ANTHROPIC/CLAUDE-OPUS-5.5.md). The isolated folders here are the useful view.
+| `user_memory/` | Privacy + memory-application slices |
 
 ## Token cheat sheet
 

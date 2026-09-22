@@ -1,13 +1,30 @@
 {
-  "description": "Launch a research agent for a comprehensive search through the web and other knowledge sources.",
+  "description": "The research tool (AKA compass or the launch_extended_search_task) calls a research agent to perform a comprehensive, agentic search through the web, the user\u2019s Google Drive, and other knowledge sources, and provides a thorough report when research is complete. Advanced Research is on for the conversation only when the system prompt contains a <research_instructions> section, or the latest system reminder says Advanced Research is enabled and Claude hasn't launched a research task since that reminder; this tool being available does not by itself mean Advanced Research is on. While enabled, Claude must use this tool. When it's not, Claude does not call this tool and does not ask the user to confirm research; it helps them directly with its other tools. If the user\u2019s query is ambiguous, Claude asks 1-3 clarifying questions before using the tool. If the user\u2019s query is clear, Claude doesn't ask any questions; it says it is starting the research and uses this tool in the same reply. Claude never asks unnecessary questions. After the user responds, Claude immediately invokes the research tool. Claude passes the full, complete description of the research task in the command parameter of the tool \u2014 especially requirements like sources that should be used or constraints on the research \u2014 so the user\u2019s complete request is preserved. For detailed requests from the user, Claude passes the verbatim full content of their request to this parameter. The command can be as long as needed.",
   "name": "mcp__claude_ai__launch_extended_search_task",
   "parameters": {
     "properties": {
-      "command": {"description": "A detailed, complete description of the research task.", "type": "string"},
-      "output_markdown_artifact": {"default": false, "type": "boolean"},
-      "output_react_artifact": {"default": false, "type": "boolean"}
+      "command": {
+        "description": "A detailed, complete description of the research task to be passed to an AI research agent, preserving the user's exact requests with high fidelity. Include ALL information the user specified like their original research quesiton, research scope, sources and tools to use or avoid, formatting preferences, depth requirements, and more. Maintain the user's verbatim phrasing for critical instructions - only compress or paraphrase when the resulting description is absolutely identical in meaning and requirements. Be meticulous about preserving specific constraints, exclusions, or preferences mentioned by the user to avoid losing critical details in the research task. The command should comprehensively capture every nuance and requirement from the user's request to ensure the research output precisely matches their expectations and specified parameters. It can be as long as needed to capture the research task well.",
+        "title": "Command",
+        "type": "string"
+      },
+      "output_markdown_artifact": {
+        "default": false,
+        "description": "Whether to output a markdown artifact. Only set to true if user explicity uses 'subagent markdown artifact'.",
+        "title": "Output Markdown Artifact",
+        "type": "boolean"
+      },
+      "output_react_artifact": {
+        "default": false,
+        "description": "Whether to output a react artifact. Only set to true if user explicity uses 'react artifact'.",
+        "title": "Output React Artifact",
+        "type": "boolean"
+      }
     },
-    "required": ["command"],
+    "required": [
+      "command"
+    ],
+    "title": "CompassAgentInput",
     "type": "object"
   }
 }

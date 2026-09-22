@@ -1,15 +1,31 @@
 {
-  "description": "Read one or more memory documents. Pass a list of paths to read several files in a single call.",
+  "description": "Read one or more memory documents. Returns each document's content and last-updated time. Pass a list of paths to read several files in a single call instead of one call per file.",
   "name": "mcp__memory__memory_read",
   "parameters": {
     "additionalProperties": false,
     "properties": {
       "path": {
-        "anyOf": [{"type": "string"}, {"items": {"type": "string"}, "maxItems": 20, "minItems": 1, "type": "array"}],
-        "description": "Path of the memory document to read, or a list of up to 20 paths."
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "type": "array"
+          }
+        ],
+        "description": "Path of the memory document to read (e.g. /topics/schedule.md), or a list of up to 20 paths to read together in one call.",
+        "title": "Path"
       }
     },
-    "required": ["path"],
+    "required": [
+      "path"
+    ],
+    "title": "MemoryReadMultiParams",
     "type": "object"
   }
 }

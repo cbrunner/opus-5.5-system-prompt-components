@@ -3,23 +3,74 @@
   "name": "mcp__Claude_Docs__update",
   "parameters": {
     "properties": {
+      "answering": {
+        "maxLength": 64,
+        "type": "string"
+      },
       "container": {
-        "properties": {"id": {"type": "string"}, "kind": {"type": "string"}, "version": {"type": "string"}},
-        "required": ["kind", "id"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "id"
+        ],
         "type": "object"
       },
-      "payload": {"anyOf": [{"type": "object"}, {"type": "string"}]},
+      "engine": {
+        "type": "string"
+      },
+      "opId": {
+        "type": "string"
+      },
+      "payload": {
+        "anyOf": [
+          {
+            "type": "object"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
       "ref": {
         "properties": {
-          "id": {"type": "string"},
-          "object": {"enum": ["project", "file", "node", "utterance", "enum"], "type": "string"}
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "enum": [
+              "project",
+              "file",
+              "node",
+              "utterance",
+              "enum"
+            ],
+            "type": "string"
+          }
         },
-        "required": ["object", "id"],
+        "required": [
+          "object",
+          "id"
+        ],
         "type": "object"
       },
-      "verbose": {"type": "boolean"}
+      "verbose": {
+        "type": "boolean"
+      }
     },
-    "required": ["ref", "payload"],
+    "required": [
+      "ref",
+      "payload"
+    ],
     "type": "object"
   }
 }

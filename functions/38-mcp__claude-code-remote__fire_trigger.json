@@ -1,18 +1,20 @@
 {
-  "description": "Fire a scheduled task immediately, outside of its schedule. Optionally include text appended as an extra user turn.",
+  "description": "Fire a scheduled task immediately, outside of its schedule. The scheduled task must belong to the calling session's account. Use this to kick off a scheduled task on demand \u2014 e.g. after noticing a condition the scheduled task is meant to handle, or to re-run a scheduled task whose last scheduled run failed. Optionally include a text message that is appended as an extra user turn after the scheduled task's configured prompt, so you can pass run-specific context (an error message, a PR link, a diff) into that one firing. When telling the user what you did, call these \"scheduled tasks\" (or whatever user is calling them) \u2014 never \"triggers\", \"routines\", or \"cron jobs\"; those are internal API names.",
   "name": "mcp__claude-code-remote__fire_trigger",
   "parameters": {
     "properties": {
       "text": {
-        "description": "Optional text appended as an extra user message after the scheduled task's configured prompt.",
+        "description": "Optional text appended as an extra user message after the scheduled task's configured prompt. Use this to pass run-specific context into the scheduled task. Bounded to 64 KiB.",
         "type": "string"
       },
       "trigger_id": {
-        "description": "The scheduled task's trigger ID (starts with 'trig_').",
+        "description": "The scheduled task's trigger ID (starts with 'trig_'). Returned by create_trigger in the response's trigger.id field, or by list_triggers.",
         "type": "string"
       }
     },
-    "required": ["trigger_id"],
+    "required": [
+      "trigger_id"
+    ],
     "type": "object"
   }
 }

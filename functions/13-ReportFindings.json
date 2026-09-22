@@ -1,5 +1,5 @@
 {
-  "description": "Report code-review findings as a typed list so the host UI can render them. Use only when active code-review instructions tell you to report findings with this tool.",
+  "description": "Report code-review findings as a typed list so the host UI can render them. Use this only when the active code-review instructions tell you to report findings with this tool; otherwise follow whatever output format those instructions specify. When reporting a review's results, call it once with the verified findings ranked most-severe first (empty array if nothing survived verification) and do not also print the findings as text. When re-reporting after applying fixes (only if the apply instructions ask for it), set `outcome` on each finding to what actually happened.",
   "name": "ReportFindings",
   "parameters": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -10,24 +10,77 @@
         "items": {
           "additionalProperties": false,
           "properties": {
-            "category": {"description": "Short kebab-case slug of the finding type", "maxLength": 40, "type": "string"},
-            "failure_scenario": {"description": "Concrete inputs/state to wrong output/crash", "type": "string"},
-            "file": {"description": "Repo-relative path of the file the finding is in", "type": "string"},
-            "line": {"description": "1-indexed line the finding anchors to", "type": "integer"},
-            "outcome": {"enum": ["fixed", "skipped", "no_change_needed"], "type": "string"},
-            "short_summary": {"maxLength": 60, "type": "string"},
-            "summary": {"description": "One-sentence statement of the defect", "type": "string"},
-            "verdict": {"enum": ["CONFIRMED", "PLAUSIBLE"], "type": "string"}
+            "category": {
+              "description": "Short kebab-case slug of the finding type, e.g. \"correctness\", \"simplification\", \"efficiency\", \"test-coverage\"",
+              "maxLength": 40,
+              "type": "string"
+            },
+            "failure_scenario": {
+              "description": "Concrete inputs/state \u2192 wrong output/crash",
+              "type": "string"
+            },
+            "file": {
+              "description": "Repo-relative path of the file the finding is in",
+              "type": "string"
+            },
+            "line": {
+              "description": "1-indexed line the finding anchors to",
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "outcome": {
+              "description": "Set ONLY when re-reporting after applying fixes: what happened to this finding",
+              "enum": [
+                "fixed",
+                "skipped",
+                "no_change_needed"
+              ],
+              "type": "string"
+            },
+            "short_summary": {
+              "description": "Compressed label for compact UI (\u226460 chars): the claim alone, no rationale or consequence clause",
+              "maxLength": 60,
+              "type": "string"
+            },
+            "summary": {
+              "description": "One-sentence statement of the defect",
+              "type": "string"
+            },
+            "verdict": {
+              "description": "Set when a verify pass ran; absent on inline-only reviews",
+              "enum": [
+                "CONFIRMED",
+                "PLAUSIBLE"
+              ],
+              "type": "string"
+            }
           },
-          "required": ["file", "summary", "failure_scenario"],
+          "required": [
+            "file",
+            "summary",
+            "failure_scenario"
+          ],
           "type": "object"
         },
         "maxItems": 32,
         "type": "array"
       },
-      "level": {"enum": ["low", "medium", "high", "xhigh", "max"], "type": "string"}
+      "level": {
+        "description": "Effort level the review ran at",
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "type": "string"
+      }
     },
-    "required": ["findings"],
+    "required": [
+      "findings"
+    ],
     "type": "object"
   }
 }

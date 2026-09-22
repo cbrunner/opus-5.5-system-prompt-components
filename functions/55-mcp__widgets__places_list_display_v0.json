@@ -1,25 +1,46 @@
 {
-  "description": "Show a stacked list of places, each with photos and a short description. Not for Google Places results.",
+  "description": "Show a stacked list of places, each with up to 3 photos and a short description. Use this when the answer is a browsable set of 2\u20138 specific places the user might visit \u2014 cafes, hikes, neighbourhoods, hotels \u2014 and photos help more than a map (e.g., 'a few good ramen spots in Shibuya', 'best beaches near Lisbon').\n\nOnly for places you found via web search or already know \u2014 this card cannot display Google data.\n\nPass each place's name and a description \u2014 photos are added automatically from the place names; don't include image URLs.\n\nDON'T use this card when:\n- The places came from places_search \u2014 that data is Google's and this card cannot attribute it. Use places_map_display_v0.\n- The user needs to see where places are relative to each other, or wants a route \u2014 use places_map_display_v0.\n- It's a day-by-day plan \u2014 use itinerary_display_v0.\n- You only have one place \u2014 write prose with a places_map marker instead.\n\nEach place's description can run up to a paragraph \u2014 what it's like, what to order or do there, when to go. Never include ratings, review counts, or review quotes from places_search. Don't re-list the places in your prose.",
   "name": "mcp__widgets__places_list_display_v0",
   "parameters": {
     "properties": {
       "places": {
         "items": {
           "properties": {
-            "description": {"type": "string"},
-            "name": {"type": "string"},
-            "tips": {"items": {"type": "string"}, "maxItems": 3, "type": "array"}
+            "description": {
+              "description": "Optional. One or two short sentences on what to do or expect there.",
+              "type": "string"
+            },
+            "name": {
+              "description": "Name of the place (a few words).",
+              "type": "string"
+            },
+            "tips": {
+              "description": "Optional. Up to three very short (2\u20134 word) practical labels, e.g. 'Book ahead', 'Go for sunset'. Not full sentences.",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 3,
+              "type": "array"
+            }
           },
-          "required": ["name"],
+          "required": [
+            "name"
+          ],
           "type": "object"
         },
         "maxItems": 8,
         "minItems": 1,
         "type": "array"
       },
-      "summary": {"type": "string"}
+      "summary": {
+        "description": "One short sentence (under 15 words) naming what this card shows, for surfaces that can't render it. Don't repeat the place names. Write this last.",
+        "type": "string"
+      }
     },
-    "required": ["places", "summary"],
+    "required": [
+      "places",
+      "summary"
+    ],
     "type": "object"
   }
 }

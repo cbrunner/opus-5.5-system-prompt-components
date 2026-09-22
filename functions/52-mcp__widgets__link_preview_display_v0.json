@@ -1,26 +1,47 @@
 {
-  "description": "Show 1\u20136 web links as preview cards with title, source, and an optional snippet.",
+  "description": "Show 1\u20136 web links as preview cards with title, source, and an optional snippet. Use this when surfacing external web sources the user should open \u2014 search results, citations, or 'read more' references that back up your answer (e.g., 'find me articles on X', 'where can I read more about this').\n\nDON'T use this card when:\n- The content is in-chat (your own prose, code, or an artifact) rather than an external page.\n- You only have one link and it's incidental \u2014 inline it in prose.\n- There are more than six sources \u2014 pick the best six.\n- You don't have a real, absolute http(s) URL for an entry \u2014 never fabricate a link; drop that entry.\n\nKeep titles to one line and snippets to one or two sentences. The card already renders the link, title, and source \u2014 don't re-list the URLs in your prose.",
   "name": "mcp__widgets__link_preview_display_v0",
   "parameters": {
     "properties": {
       "links": {
         "items": {
           "properties": {
-            "domain": {"type": "string"},
-            "snippet": {"type": "string"},
-            "title": {"type": "string"},
-            "url": {"type": "string"}
+            "domain": {
+              "description": "Optional display host or site name (e.g. 'Wirecutter'). Derived from url when omitted.",
+              "type": "string"
+            },
+            "snippet": {
+              "description": "Optional one- or two-sentence excerpt explaining why this link is relevant.",
+              "type": "string"
+            },
+            "title": {
+              "description": "Page title (one line, under ~80 chars).",
+              "type": "string"
+            },
+            "url": {
+              "description": "Absolute http(s) URL the card opens. Must start with https:// or http://.",
+              "type": "string"
+            }
           },
-          "required": ["url", "title"],
+          "required": [
+            "url",
+            "title"
+          ],
           "type": "object"
         },
         "maxItems": 6,
         "minItems": 1,
         "type": "array"
       },
-      "summary": {"type": "string"}
+      "summary": {
+        "description": "One short sentence (under 15 words) naming what this card shows, for surfaces that can't render it. Don't repeat the link titles. Write this last.",
+        "type": "string"
+      }
     },
-    "required": ["links", "summary"],
+    "required": [
+      "links",
+      "summary"
+    ],
     "type": "object"
   }
 }

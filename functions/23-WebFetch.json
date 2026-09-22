@@ -15,7 +15,10 @@
         "type": "string"
       }
     },
-    "required": ["url", "prompt"],
+    "required": [
+      "url",
+      "prompt"
+    ],
     "type": "object"
   }
 }

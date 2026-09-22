@@ -1,5 +1,5 @@
 {
-  "description": "Show 2\u20133 products side-by-side in a comparison table with aligned attribute rows.",
+  "description": "Show 2\u20133 products side-by-side in a comparison table with aligned attribute rows. Use this for shopping questions where the user is weighing a small set of named options against the same criteria (e.g., 'iPad Air vs iPad Pro', 'compare these three monitors').\n\nDON'T use this card when:\n- There's only one product \u2014 use featured_card_display_v0 (single pick). More than three \u2014 use product_carousel_display_v0.\n- The options don't share comparable attributes (you'd be padding rows with 'N/A').\n- The user wants a single recommendation with reasoning, not a spec table \u2014 write prose.\n- The comparison is between approaches or plans rather than purchasable products.\n\nUse the SAME attribute labels in the SAME order across every product so the rows line up. Don't re-list the products or attribute values in your prose.",
   "name": "mcp__widgets__comparison_card_display_v0",
   "parameters": {
     "properties": {
@@ -8,28 +8,58 @@
           "properties": {
             "attributes": {
               "items": {
-                "properties": {"label": {"type": "string"}, "value": {"type": "string"}},
-                "required": ["label", "value"],
+                "properties": {
+                  "label": {
+                    "description": "Short attribute name (e.g. 'Display', 'Battery'). Use the SAME label set, in the SAME order, across every product so rows line up.",
+                    "type": "string"
+                  },
+                  "value": {
+                    "description": "This product's value for the attribute.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "value"
+                ],
                 "type": "object"
               },
               "maxItems": 8,
               "minItems": 2,
               "type": "array"
             },
-            "name": {"type": "string"},
-            "price": {"type": "string"},
-            "url": {"type": "string"}
+            "name": {
+              "description": "Product or option name (a few words).",
+              "type": "string"
+            },
+            "price": {
+              "description": "Display price with currency, e.g. '$1,099'. Omit when not applicable or unknown.",
+              "type": "string"
+            },
+            "url": {
+              "description": "Absolute https URL of the product page. Omit if you don't have a real one \u2014 never fabricate a link.",
+              "type": "string"
+            }
           },
-          "required": ["name", "attributes"],
+          "required": [
+            "name",
+            "attributes"
+          ],
           "type": "object"
         },
         "maxItems": 3,
         "minItems": 2,
         "type": "array"
       },
-      "summary": {"type": "string"}
+      "summary": {
+        "description": "One short sentence (under 15 words) naming what this card compares, for surfaces that can't render it. Don't repeat the attribute values. Write this last.",
+        "type": "string"
+      }
     },
-    "required": ["products", "summary"],
+    "required": [
+      "products",
+      "summary"
+    ],
     "type": "object"
   }
 }

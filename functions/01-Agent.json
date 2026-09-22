@@ -11,12 +11,20 @@
       },
       "isolation": {
         "description": "Isolation mode. \"worktree\" creates a temporary git worktree so the agent works on an isolated copy of the repo. \"remote\" launches the agent in a remote cloud environment (always runs in background; availability is gated).",
-        "enum": ["worktree", "remote"],
+        "enum": [
+          "worktree",
+          "remote"
+        ],
         "type": "string"
       },
       "model": {
-        "description": "Optional model override for this agent.",
-        "enum": ["sonnet", "opus", "haiku", "fable"],
+        "description": "Optional model override for this agent. Takes precedence over the agent definition's model frontmatter and the configured default subagent model. If omitted, uses the agent definition's model, else the default (inherits from the parent unless a default subagent model is configured). Ignored for subagent_type: \"fork\" \u2014 forks always inherit the parent model.",
+        "enum": [
+          "sonnet",
+          "opus",
+          "haiku",
+          "fable"
+        ],
         "type": "string"
       },
       "prompt": {
@@ -28,7 +36,10 @@
         "type": "string"
       }
     },
-    "required": ["description", "prompt"],
+    "required": [
+      "description",
+      "prompt"
+    ],
     "type": "object"
   }
 }

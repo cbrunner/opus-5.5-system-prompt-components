@@ -1,14 +1,16 @@
 {
-  "description": "Delete a scheduled task. The scheduled task must belong to the calling session's account.",
+  "description": "Delete a scheduled task. The scheduled task must belong to the calling session's account \u2014 deleting another account's scheduled task fails with not-found. Use this to undo a create_trigger call or to clean up scheduled tasks whose work is done. A bad cron or wrong prompt does not need deletion \u2014 update_trigger fixes those in place, keeping the scheduled task's run history. On success, the result usually echoes the deleted scheduled task's last state (including its name) in the response's trigger field \u2014 callers without stored-data read access get a plain-text confirmation instead. Either way the scheduled task no longer exists once this returns. When telling the user what you did, call these \"scheduled tasks\" (or whatever user is calling them) \u2014 never \"triggers\", \"routines\", or \"cron jobs\"; those are internal API names.",
   "name": "mcp__claude-code-remote__delete_trigger",
   "parameters": {
     "properties": {
       "trigger_id": {
-        "description": "The scheduled task's trigger ID to delete (starts with 'trig_').",
+        "description": "The scheduled task's trigger ID to delete (starts with 'trig_'). Returned by create_trigger in the response's trigger.id field, or by list_triggers.",
         "type": "string"
       }
     },
-    "required": ["trigger_id"],
+    "required": [
+      "trigger_id"
+    ],
     "type": "object"
   }
 }

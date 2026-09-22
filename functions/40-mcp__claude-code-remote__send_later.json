@@ -1,15 +1,39 @@
 {
-  "description": "Schedule a message to be delivered back into THIS SESSION at a future time. Delivery survives container restarts. Granularity is one minute.",
+  "description": "Schedule a message to be delivered back into THIS SESSION at a future time. The message arrives as an ordinary user turn, so you can use it to remind yourself to resume work, check on something, or continue after a delay. Delivery survives container restarts. Granularity is one minute \u2014 the scheduler polls every minute, so sub-minute precision is not available. This is a thin wrapper over create_trigger (a one-shot scheduled task bound to this session); the returned trigger_id can be passed to delete_trigger to cancel before it fires, and the scheduled task disables itself after firing once. When telling the user what you did, call these \"scheduled tasks\" (or whatever user is calling them) \u2014 never \"triggers\", \"routines\", or \"cron jobs\"; those are internal API names.",
   "name": "mcp__claude-code-remote__send_later",
   "parameters": {
     "properties": {
-      "at": {"description": "RFC3339 timestamp for the fire time. Mutually exclusive with delay_minutes.", "type": "string"},
-      "delay_minutes": {"description": "Fire this many minutes from now. Minimum 1.", "minimum": 1, "type": "integer"},
-      "initiation": {"enum": ["human_request", "human_schedule", "own_followup", "own_initiative"], "type": "string"},
-      "message": {"description": "The text to deliver as a user turn.", "type": "string"},
-      "name": {"description": "Short human-readable label for this reminder.", "type": "string"}
+      "at": {
+        "description": "RFC3339 timestamp for the fire time (e.g. 2026-04-20T17:00:00Z). Seconds are truncated. Must be in the future. Mutually exclusive with 'delay_minutes' \u2014 set exactly one.",
+        "type": "string"
+      },
+      "delay_minutes": {
+        "description": "Fire this many minutes from now. Minimum 1. Mutually exclusive with 'at' \u2014 set exactly one.",
+        "minimum": 1,
+        "type": "integer"
+      },
+      "initiation": {
+        "description": "Who wanted this message scheduled. Defaults to own_followup (your own check-in on in-flight work); pass human_request when a person asked you to remind them or to come back at a set time.",
+        "enum": [
+          "human_request",
+          "human_schedule",
+          "own_followup",
+          "own_initiative"
+        ],
+        "type": "string"
+      },
+      "message": {
+        "description": "The text to deliver as a user turn. Write it assuming your current conversation context \u2014 this session continues, it does not start fresh.",
+        "type": "string"
+      },
+      "name": {
+        "description": "Short human-readable label for this reminder as it appears in the user's list of scheduled tasks (e.g. \"Re-check PR #123 CI\"). A few words, one line. Optional \u2014 omit and one is derived from the message.",
+        "type": "string"
+      }
     },
-    "required": ["message"],
+    "required": [
+      "message"
+    ],
     "type": "object"
   }
 }

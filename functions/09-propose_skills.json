@@ -1,5 +1,5 @@
 {
-  "description": "Surface recurring multi-step procedures as skill proposals. Render-only; max 3 proposals per call.",
+  "description": "Surface recurring multi-step procedures from this session as skill proposals. Render-only \u2014 calling this shows a review card in the conversation; it does not write any files or create the skill. The user reviews and saves from the card. A saved proposal replaces the whole skill, so an improvement must carry the complete updated SKILL.md, never a partial edit.\n\nCall once with all proposals (max 3). Use it when the user asks to turn a workflow or procedure into a skill, or when the same multi-step procedure has recurred and a skill would clearly save future work. Do not call it for one-off tasks, and do not re-propose skills the user has already seen.\n\nAn improvement can only update one of the user's own skills; a plugin's skill or a built-in one can't be updated from the card. To customize one of those with this tool, propose it as a new skill under a name of its own \u2014 not the original's name, even without its plugin prefix \u2014 with a description that says when to use it instead of the original: both stay listed, and the description decides which one is used.",
   "name": "propose_skills",
   "parameters": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -7,15 +7,47 @@
     "properties": {
       "proposals": {
         "items": {
+          "additionalProperties": false,
           "properties": {
-            "description": {"maxLength": 1024, "type": "string"},
-            "evidence": {"items": {"type": "string"}, "type": "array"},
-            "kind": {"enum": ["new", "improvement"], "type": "string"},
-            "name": {"type": "string"},
-            "skillMd": {"description": "The complete SKILL.md exactly as it should be saved.", "type": "string"},
-            "target": {"description": "Name of the existing skill to update when kind is improvement.", "type": "string"}
+            "description": {
+              "description": "One short sentence saying when to use this skill: aim for under 200 characters, never more than 1024, and no angle brackets. Shown on the review card and saved as the skill's description, which is what decides when the skill is used. For an improvement, reuse the existing skill's description unless the change alters when the skill applies.",
+              "maxLength": 1024,
+              "type": "string"
+            },
+            "evidence": {
+              "description": "memory file paths where this procedure was observed",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "kind": {
+              "enum": [
+                "new",
+                "improvement"
+              ],
+              "type": "string"
+            },
+            "name": {
+              "description": "kebab-case skill slug",
+              "minLength": 1,
+              "type": "string"
+            },
+            "skillMd": {
+              "description": "The complete SKILL.md exactly as it should be saved: frontmatter plus the full body. When the user saves, the body below the frontmatter becomes the skill's entire instructions and the name and description come from the fields above; other frontmatter keys are not kept. For an improvement this replaces the existing skill's SKILL.md entirely, so read that skill's current SKILL.md first and include everything worth keeping, not only the changes.",
+              "type": "string"
+            },
+            "target": {
+              "description": "Name of the existing skill to update. Required when kind is 'improvement'; omit for 'new'.",
+              "type": "string"
+            }
           },
-          "required": ["name", "kind", "description", "skillMd"],
+          "required": [
+            "name",
+            "kind",
+            "description",
+            "skillMd"
+          ],
           "type": "object"
         },
         "maxItems": 3,
@@ -23,7 +55,9 @@
         "type": "array"
       }
     },
-    "required": ["proposals"],
+    "required": [
+      "proposals"
+    ],
     "type": "object"
   }
 }

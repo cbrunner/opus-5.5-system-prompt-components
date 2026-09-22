@@ -1,21 +1,52 @@
 {
-  "description": "Draft a message (email, Slack, or text) with goal-oriented approaches.",
+  "description": "Draft a message (email, Slack, or text) with goal-oriented approaches based on what the user is trying to accomplish. Analyze the situation type (work disagreement, negotiation, following up, delivering bad news, asking for something, setting boundaries, apologizing, declining, giving feedback, cold outreach, responding to feedback, clarifying misunderstanding, delegating, celebrating) and identify competing goals or relationship stakes. **MULTIPLE APPROACHES** (if high-stakes, ambiguous, or competing goals): Start with a scenario summary. Generate 2-3 strategies that lead to different outcomes\u2014not just tones. Label each clearly (e.g., \"Disagree and commit\" vs \"Push for alignment\", \"Gentle nudge\" vs \"Create urgency\", \"Rip the bandaid\" vs \"Soften the landing\"). Note what each prioritizes and trades off. **SINGLE MESSAGE** (if transactional, one clear approach, or user just needs wording help): Just draft it. For emails, include a subject line. Adapt to channel\u2014emails longer/formal, Slack concise, texts brief. Test: Would a user choose between these based on what they want to accomplish? The card already shows each draft in full \u2014 label, subject, and body \u2014 with copy and open affordances, so do NOT repeat the draft text in your reply; add at most one or two sentences of framing (how the approaches differ, or what to customize).",
   "name": "mcp__widgets__message_compose_v1",
   "parameters": {
     "properties": {
-      "kind": {"enum": ["email", "textMessage", "other"], "type": "string"},
-      "summary_title": {"type": "string"},
+      "kind": {
+        "description": "The type of message. 'email' shows a subject field and 'Open in Mail' button. 'textMessage' shows 'Open in Messages' button. 'other' shows 'Copy' button for platforms like LinkedIn, Slack, etc.",
+        "enum": [
+          "email",
+          "textMessage",
+          "other"
+        ],
+        "type": "string"
+      },
+      "summary_title": {
+        "description": "A brief title that summarizes the message (shown in the share sheet)",
+        "type": "string"
+      },
       "variants": {
+        "description": "Message variants representing different strategic approaches",
         "items": {
-          "properties": {"body": {"type": "string"}, "label": {"type": "string"}, "subject": {"type": "string"}},
-          "required": ["label", "body"],
+          "properties": {
+            "body": {
+              "description": "The message content",
+              "type": "string"
+            },
+            "label": {
+              "description": "2-4 word goal-oriented label. E.g., 'Apologetic', 'Suggest alternative', 'Hold firm', 'Push back', 'Polite decline', 'Express interest'",
+              "type": "string"
+            },
+            "subject": {
+              "description": "Email subject line (only used when kind is 'email')",
+              "type": "string"
+            }
+          },
+          "required": [
+            "label",
+            "body"
+          ],
           "type": "object"
         },
         "minItems": 1,
         "type": "array"
       }
     },
-    "required": ["kind", "variants"],
+    "required": [
+      "kind",
+      "variants"
+    ],
     "type": "object"
   }
 }

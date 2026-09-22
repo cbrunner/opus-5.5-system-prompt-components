@@ -1,22 +1,47 @@
 {
-  "description": "Show a numbered, step-by-step walkthrough for fixing or setting something up.",
+  "description": "Show a numbered, step-by-step walkthrough for fixing or setting something up. Use this for tech-support and how-to questions where the answer is 3\u20138 ordered steps, each with a short title and a one- or two-sentence description (e.g., 'how do I reset my router', 'set up two-factor on GitHub').\n\nDON'T use this card when:\n- The answer is a single step or a one-line setting toggle \u2014 write prose.\n- The answer is non-procedural advice, background explanation, or a list of options to choose between \u2014 write prose (or use options_card_display_v0).\n- Steps don't have a meaningful order, or you'd be inventing filler steps to reach three.\n- It's a coding task where the user wants the code, not a walkthrough.\n\nKeep each step title to a few imperative words; each step's description can be a short paragraph \u2014 enough detail to actually do the step without guessing. The card already numbers and renders the steps \u2014 don't re-list them in your prose, and don't prefix titles with 'Step 1:'.",
   "name": "mcp__widgets__step_card_display_v0",
   "parameters": {
     "properties": {
       "steps": {
         "items": {
-          "properties": {"description": {"type": "string"}, "title": {"type": "string"}},
-          "required": ["title", "description"],
+          "properties": {
+            "description": {
+              "description": "A short paragraph explaining how to do this step and why it matters \u2014 enough detail to follow without guessing.",
+              "type": "string"
+            },
+            "title": {
+              "description": "Name of this step (a few words, imperative).",
+              "type": "string"
+            }
+          },
+          "required": [
+            "title",
+            "description"
+          ],
           "type": "object"
         },
         "maxItems": 8,
         "minItems": 2,
         "type": "array"
       },
-      "summary": {"type": "string"},
-      "view": {"enum": ["stepper", "list"], "type": "string"}
+      "summary": {
+        "description": "One short sentence (under 15 words) naming what this card shows, for surfaces that can't render it. Don't repeat the steps. Write this last.",
+        "type": "string"
+      },
+      "view": {
+        "description": "How the steps are first shown. 'stepper' (the default) reveals one step at a time \u2014 use it when steps must be done in order. 'list' shows everything at once \u2014 use it for short checklists the user will scan, not follow.",
+        "enum": [
+          "stepper",
+          "list"
+        ],
+        "type": "string"
+      }
     },
-    "required": ["steps", "summary"],
+    "required": [
+      "steps",
+      "summary"
+    ],
     "type": "object"
   }
 }

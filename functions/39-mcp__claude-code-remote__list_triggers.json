@@ -1,15 +1,34 @@
 {
-  "description": "List scheduled tasks owned by this account. Use it to find trigger IDs for update_trigger and delete_trigger.",
+  "description": "List scheduled tasks owned by this account. Use it to find trigger IDs (trig_...) for update_trigger and delete_trigger. From a thread in a Slack channel, only scheduled tasks that fire into that thread's session are listed unless all_in_channel is true. Each entry has the scheduled task's id, name, cron_expression, run_once_at, enabled state, ended_reason, next_run_at, created_at, persistent_session_id, and last_run. last_run is the most recent recorded run {status, fired_at, finished_at, session_id}. It is absent when no run was recorded (e.g. never fired). For a scheduled task that wakes an existing session, last_run records that the wake was delivered (SUCCEEDED) or failed to deliver, not how the turn went, unless run tracking covers that session. A FAILED or repeatedly non-SUCCEEDED last_run means the scheduled task is not doing its job. ended_reason says why a disabled scheduled task is permanently disabled. suspension_reason (e.g. subscription_paused) marks a temporary hold that lifts when the owner's subscription resumes. Both empty means user-paused. One-shot scheduled tasks that already fired (e.g. delivered send_later reminders) and scheduled tasks moved to a project are hidden unless include_completed is true. Scheduled tasks stored locally by the Cowork desktop app are not listed. When telling the user what you did, call these \"scheduled tasks\" (or whatever user is calling them) \u2014 never \"triggers\", \"routines\", or \"cron jobs\"; those are internal API names.",
   "name": "mcp__claude-code-remote__list_triggers",
   "parameters": {
     "properties": {
-      "all_in_channel": {"type": "boolean"},
-      "cursor": {"type": "string"},
-      "enabled": {"type": "boolean"},
-      "include_completed": {"type": "boolean"},
-      "limit": {"type": "integer"},
-      "recurring": {"type": "boolean"}
+      "all_in_channel": {
+        "description": "Threads in a Slack channel only. If true, list every scheduled task in this channel, including other threads' and ones that start a new session each time they fire. Default false.",
+        "type": "boolean"
+      },
+      "cursor": {
+        "description": "Opaque pagination cursor from a previous response's next_cursor. Omit for the first page.",
+        "type": "string"
+      },
+      "enabled": {
+        "description": "When set, only scheduled tasks whose enabled state matches. true hides fired one-shots, paused, and auto-disabled scheduled tasks; false shows only those. Omit for both.",
+        "type": "boolean"
+      },
+      "include_completed": {
+        "description": "If true, also include one-shot scheduled tasks that have already fired (e.g. delivered send_later reminders) and scheduled tasks moved to a project. Default false \u2014 there can be thousands.",
+        "type": "boolean"
+      },
+      "limit": {
+        "description": "Maximum scheduled tasks to return (default 20, max 100).",
+        "type": "integer"
+      },
+      "recurring": {
+        "description": "When set, filters by schedule shape: true keeps only cron-driven (recurring) scheduled tasks, false only one-shot and fire-only scheduled tasks. Omit for both.",
+        "type": "boolean"
+      }
     },
+    "required": [],
     "type": "object"
   }
 }

@@ -1,26 +1,169 @@
 {
-  "description": "Display an interactive recipe with adjustable servings.",
+  "description": "Display an interactive recipe with adjustable servings. Use when the user asks for a recipe, cooking instructions, or food preparation guide. The widget allows users to scale all ingredient amounts proportionally by adjusting the servings control.",
   "name": "mcp__widgets__recipe_display_v0",
   "parameters": {
-    "properties": {
-      "base_servings": {"type": "number"},
-      "ingredients": {
-        "items": {
-          "properties": {
-            "amount": {"type": "number"},
-            "id": {"type": "string"},
-            "name": {"type": "string"},
-            "unit": {"type": "string"}
+    "$defs": {
+      "RecipeIngredient": {
+        "description": "Individual ingredient in a recipe.",
+        "properties": {
+          "amount": {
+            "description": "The quantity for base_servings",
+            "title": "Amount",
+            "type": "number"
           },
-          "required": ["id", "name"],
-          "type": "object"
+          "id": {
+            "description": "4 character unique identifier number for this ingredient (e.g., '0001', '0002'). Used to reference in steps.",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "description": "Display name of the ingredient. For whole/countable items, fold the counting noun in here (e.g., 'garlic cloves', 'large eggs', 'medium lemon, zested').",
+            "title": "Name",
+            "type": "string"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "enum": [
+                  "g",
+                  "kg",
+                  "ml",
+                  "l",
+                  "tsp",
+                  "tbsp",
+                  "cup",
+                  "fl_oz",
+                  "oz",
+                  "lb",
+                  "pinch"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Unit of measurement. Omit for whole/countable items (e.g., 3 garlic cloves, 2 lemons) and put the counting noun in `name` instead. For salt/pepper/seasonings, give a concrete starting amount in tsp rather than a placeholder count. Weight: g, kg, oz, lb. Volume: ml, l, tsp, tbsp, cup, fl_oz.",
+            "title": "Unit"
+          }
         },
+        "required": [
+          "amount",
+          "id",
+          "name"
+        ],
+        "title": "RecipeIngredient",
+        "type": "object"
+      },
+      "RecipeStep": {
+        "description": "Individual step in a recipe.",
+        "properties": {
+          "content": {
+            "description": "The full instruction text. Use {ingredient_id} to insert editable ingredient amounts inline (e.g., 'Whisk together {0001} and {0002}')",
+            "title": "Content",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier for this step",
+            "title": "Id",
+            "type": "string"
+          },
+          "timer_seconds": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Timer duration in seconds. Include whenever the step involves waiting, cooking, baking, resting, marinating, chilling, boiling, simmering, or any time-based action. Omit only for active hands-on steps with no waiting.",
+            "title": "Timer Seconds"
+          },
+          "title": {
+            "description": "Short summary of the step (e.g., 'Boil pasta', 'Make the sauce', 'Rest the dough'). Used as the timer label and step header in cooking mode.",
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "content",
+          "id",
+          "title"
+        ],
+        "title": "RecipeStep",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "description": "Input parameters for the recipe widget tool.",
+    "properties": {
+      "base_servings": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The number of servings this recipe makes at base amounts (default: 4)",
+        "title": "Base Servings"
+      },
+      "description": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "A brief description or tagline for the recipe",
+        "title": "Description"
+      },
+      "ingredients": {
+        "description": "List of ingredients with amounts",
+        "items": {
+          "$ref": "#/$defs/RecipeIngredient"
+        },
+        "title": "Ingredients",
         "type": "array"
       },
-      "steps": {"items": {"type": "string"}, "type": "array"},
-      "title": {"type": "string"}
+      "notes": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional tips, variations, or additional notes about the recipe",
+        "title": "Notes"
+      },
+      "steps": {
+        "description": "Cooking instructions. Reference ingredients using {ingredient_id} syntax.",
+        "items": {
+          "$ref": "#/$defs/RecipeStep"
+        },
+        "title": "Steps",
+        "type": "array"
+      },
+      "title": {
+        "description": "The name of the recipe (e.g., 'Spaghetti alla Carbonara')",
+        "title": "Title",
+        "type": "string"
+      }
     },
-    "required": ["title", "ingredients", "steps"],
+    "required": [
+      "title",
+      "ingredients",
+      "steps"
+    ],
+    "title": "RecipeWidgetParams",
     "type": "object"
   }
 }

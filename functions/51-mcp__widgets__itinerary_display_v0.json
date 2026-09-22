@@ -1,16 +1,34 @@
 {
-  "description": "Show a day-by-day travel timeline with tabbed days and a list of stops per day.",
+  "description": "Show a day-by-day travel timeline with tabbed days and a list of stops per day. Use this for trip-planning questions where the answer is an ordered itinerary across one or more days, each with at least one named stop (e.g., '3 days in Lisbon', 'plan a weekend in Kyoto').\n\nDON'T use this card when:\n- The answer is a single place \u2014 use places_map_display_v0 instead.\n- The answer is a flat list of places with no day structure \u2014 use places_map_display_v0, or places_list_display_v0 for places that did not come from places_search.\n- There are more than 7 days or more than 12 stops in a day \u2014 summarise in prose.\n- The user asked for general travel advice (visas, packing, budget) rather than a schedule.\n- Stops don't have a meaningful order within the day.\n\nKeep each blurb to one short line and day labels under ~12 chars. The card already renders the day tabs and the stop list \u2014 don't re-list the itinerary in your prose.",
   "name": "mcp__widgets__itinerary_display_v0",
   "parameters": {
     "properties": {
       "days": {
         "items": {
           "properties": {
-            "day_label": {"type": "string"},
+            "day_label": {
+              "description": "Tab label for this day \u2014 'Day 1', 'Sat 14 Jun', etc. Keep it under 12 chars.",
+              "type": "string"
+            },
             "stops": {
               "items": {
-                "properties": {"blurb": {"type": "string"}, "name": {"type": "string"}, "time": {"type": "string"}},
-                "required": ["name"],
+                "properties": {
+                  "blurb": {
+                    "description": "Optional. One short line on what to do or expect there.",
+                    "type": "string"
+                  },
+                  "name": {
+                    "description": "Name of the place or activity (a few words).",
+                    "type": "string"
+                  },
+                  "time": {
+                    "description": "Optional. Clock time or rough slot ('9:00 AM', 'Afternoon'). Omit for unscheduled stops.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
                 "type": "object"
               },
               "maxItems": 12,
@@ -18,17 +36,29 @@
               "type": "array"
             }
           },
-          "required": ["day_label", "stops"],
+          "required": [
+            "day_label",
+            "stops"
+          ],
           "type": "object"
         },
         "maxItems": 7,
         "minItems": 1,
         "type": "array"
       },
-      "summary": {"type": "string"},
-      "title": {"type": "string"}
+      "summary": {
+        "description": "One short sentence (under 15 words) naming what this card shows, for surfaces that can't render it. Don't repeat the stops. Write this last.",
+        "type": "string"
+      },
+      "title": {
+        "description": "Short heading for the trip (e.g. '3 days in Tokyo'). One line.",
+        "type": "string"
+      }
     },
-    "required": ["days", "summary"],
+    "required": [
+      "days",
+      "summary"
+    ],
     "type": "object"
   }
 }

@@ -7,12 +7,16 @@
     "properties": {
       "allowed_domains": {
         "description": "Only include search results from these domains",
-        "items": {"type": "string"},
+        "items": {
+          "type": "string"
+        },
         "type": "array"
       },
       "blocked_domains": {
         "description": "Never include search results from these domains",
-        "items": {"type": "string"},
+        "items": {
+          "type": "string"
+        },
         "type": "array"
       },
       "query": {
@@ -21,7 +25,9 @@
         "type": "string"
       }
     },
-    "required": ["query"],
+    "required": [
+      "query"
+    ],
     "type": "object"
   }
 }

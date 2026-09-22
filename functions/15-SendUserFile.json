@@ -1,16 +1,43 @@
 {
-  "description": "Send files to the user. Use this for any file the user would want to see. Send deliverables as they are produced. Set status on every call: proactive when initiating, normal when replying.",
+  "description": "Send files to the user. Use this for any file the user would want to see \u2014 a generated diagram, a report, a screenshot, a built artifact \u2014 and you want it surfaced, not just mentioned. Send deliverables as they are produced, not batched at the end of the task: a complete draft or a meaningfully updated version of the thing the user asked for is worth sending mid-task, so they can follow progress and redirect early. Do NOT send routine working files \u2014 scratch files, debug output, partial fragments, or every incremental save of something you're still actively editing; each call renders a file card in the conversation, and a stream of cards for one file is noise. Re-send a file only when it has meaningfully changed since the last send. Paths can be absolute or relative to the current working directory.\n\nAdd a `caption` when a one-liner of context helps (\"the failing case is row 42\", \"before vs after\"). Skip it if the file speaks for itself.\n\nSet `status` on every call. Use `proactive` when you're initiating \u2014 the user is away and you want this to reach their phone (build artifact ready, report generated). Use `normal` when replying to something the user just said.\n\nSet `display` to choose how the file is presented. Use `'render'` when the user should see the content inline in the side panel right now \u2014 a chart, a rendered HTML page, a diagram, an image. Use `'attach'` when the file is something they'll save and open elsewhere \u2014 source code, a spreadsheet, a document for another app \u2014 and an inline preview would just be noise. Leave it unset to let the client decide by file type.\n\nFiles must already exist on the local filesystem \u2014 the tool sends files, it doesn't fetch URLs or render content. When unsure of a path, verify with ls first; absolute paths avoid ambiguity about the working directory.\n\nExample: SendUserFile({ files: [\"report.md\"], caption: \"Here's the report.\", status: \"normal\" })",
   "name": "SendUserFile",
   "parameters": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
-      "caption": {"description": "Optional short caption for the file(s).", "type": "string"},
-      "display": {"enum": ["render", "attach"], "type": "string"},
-      "files": {"description": "File paths to send. Always pass an array.", "items": {"type": "string"}, "minItems": 1, "type": "array"},
-      "status": {"enum": ["normal", "proactive"], "type": "string"}
+      "caption": {
+        "description": "Optional short caption for the file(s).",
+        "type": "string"
+      },
+      "display": {
+        "description": "How the client should present the file. 'render' opens it inline in the side panel (for HTML, SVG, Mermaid, images, PDFs \u2014 anything the user wants to look at now). 'attach' shows a download card only, no inline preview (for deliverables the user will save and open elsewhere). Omit to let the client decide by file type \u2014 today that means renderable types render and everything else attaches, same as before this parameter existed.",
+        "enum": [
+          "render",
+          "attach"
+        ],
+        "type": "string"
+      },
+      "files": {
+        "description": "File paths (absolute or relative to cwd) to send to the user. Always pass an array, even for a single file.",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1,
+        "type": "array"
+      },
+      "status": {
+        "description": "Use 'proactive' when you're surfacing a file the user hasn't asked for and needs to see now \u2014 a generated artifact, a completed report. Use 'normal' when replying to something the user just said.",
+        "enum": [
+          "normal",
+          "proactive"
+        ],
+        "type": "string"
+      }
     },
-    "required": ["files", "status"],
+    "required": [
+      "files",
+      "status"
+    ],
     "type": "object"
   }
 }

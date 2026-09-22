@@ -1,22 +1,40 @@
 {
-  "description": "List memory documents (optionally under a path prefix), sorted by path. Returns path, size, and last-updated time for each.",
+  "description": "List memory documents (optionally under a path prefix), sorted by path. Returns path, size, and last-updated time for each. Results are capped; use cursor to page through large stores, or narrow with path_prefix. Set include_preview=true to also get a one-line content preview per file. Use memory_read for full content.",
   "name": "mcp__memory__memory_list",
   "parameters": {
     "additionalProperties": false,
     "properties": {
       "cursor": {
-        "description": "Path of the last entry from a previous call.",
-        "type": "string"
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Path of the last entry from a previous call. Returns entries after this path. Use with the same path_prefix to page through a large directory.",
+        "title": "Cursor"
       },
       "include_preview": {
-        "description": "If true, include a one-line preview of each file's content.",
+        "description": "If true, include a one-line preview of each file's content (the frontmatter ``description:`` value, or first non-empty body line if absent). Slower \u2014 requires reading every file. Use when deciding which files to memory_read.",
+        "title": "Include Preview",
         "type": "boolean"
       },
       "path_prefix": {
-        "description": "Optional path prefix to filter results (e.g. /topics/).",
-        "type": "string"
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional path prefix to filter results (e.g. /topics/ lists only docs under /topics/). Matching is directory-aligned: a bare prefix is treated as a directory (/topics and /topics/ are equivalent), and a file path matches nothing \u2014 use memory_read for a single file. Results are capped \u2014 narrow with a prefix or page with cursor for large stores.",
+        "title": "Path Prefix"
       }
     },
+    "title": "MemoryListParams",
     "type": "object"
   }
 }

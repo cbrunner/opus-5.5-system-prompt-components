@@ -1,27 +1,255 @@
 {
-  "description": "Display locations on a map. Call after places_search and pass place_id values verbatim.",
+  "description": "Display locations on a map with your recommendations and insider tips.\n\nWORKFLOW:\n1. Use places_search tool first to find places and get their place_id. A brief one-sentence introduction before the search is fine.\n2. Call this tool straight after places_search, with no response text between the two calls. Pass place_id references and the backend will fetch full details.\n3. Write your picks and tips after the map, so the full written response stays together as one uninterrupted piece the person can read. Never write the recommendations between the search and the map.\n\nCRITICAL: Copy place_id values EXACTLY from places_search tool results. Place IDs are case-sensitive and must be copied verbatim - do not type from memory or modify them.\n\nTWO MODES - use ONE of:\n\nA) SIMPLE MARKERS - just show places on a map:\n{\n  \"locations\": [\n    {\n      \"name\": \"Blue Bottle Coffee\",\n      \"latitude\": 37.78,\n      \"longitude\": -122.41,\n      \"place_id\": \"ChIJ...\"\n    }\n  ]\n}\n\nB) ITINERARY - show a multi-stop trip with timing:\n{\n  \"title\": \"Tokyo Day Trip\",\n  \"narrative\": \"A perfect day exploring...\",\n  \"days\": [\n    {\n      \"day_number\": 1,\n      \"title\": \"Temple Hopping\",\n      \"locations\": [\n        {\n          \"name\": \"Senso-ji Temple\",\n          \"latitude\": 35.7148,\n          \"longitude\": 139.7967,\n          \"place_id\": \"ChIJ...\",\n          \"notes\": \"Arrive early to avoid crowds\",\n          \"arrival_time\": \"8:00 AM\",\n}\n      ]\n    }\n  ],\n  \"travel_mode\": \"walking\",\n  \"show_route\": true\n}\n\nROUTES:\n- A route is only drawn for a day-structured itinerary: stops in \"days\" AND an itinerary display.\n- Flat \"locations\" lists ALWAYS render as plain markers - never a route, even with \"show_route\": true or \"mode\": \"itinerary\". A refused route ask is stated in the tool result.\n- \"show_route\": false always wins.\n- To show a route, structure the stops into \"days\". Do not carry route settings from an earlier map onto a new unordered set of places.\n\nLOCATION FIELDS:\n- name, latitude, longitude (required)\n- place_id (recommended - copy EXACTLY from places_search tool, enables full details)\n- notes (your tour guide tip)\n- arrival_time (for itineraries)\n- address (for custom locations without place_id)",
   "name": "mcp__widgets__places_map_display_v0",
   "parameters": {
-    "properties": {
-      "days": {"type": "array"},
-      "locations": {
-        "items": {
-          "properties": {
-            "latitude": {"type": "number"},
-            "longitude": {"type": "number"},
-            "name": {"type": "string"},
-            "notes": {"type": "string"},
-            "place_id": {"type": "string"}
+    "$defs": {
+      "DayInput": {
+        "additionalProperties": false,
+        "description": "Single day in an itinerary.",
+        "properties": {
+          "day_number": {
+            "description": "Day number (1, 2, 3...)",
+            "title": "Day Number",
+            "type": "integer"
           },
-          "required": ["name", "latitude", "longitude"],
-          "type": "object"
+          "locations": {
+            "description": "Stops for this day",
+            "items": {
+              "$ref": "#/$defs/MapLocationInput"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Locations",
+            "type": "array"
+          },
+          "narrative": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Tour guide story arc for the day",
+            "title": "Narrative"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Short evocative title (e.g., 'Temple Hopping')",
+            "title": "Title"
+          }
         },
-        "type": "array"
+        "required": [
+          "day_number",
+          "locations"
+        ],
+        "title": "DayInput",
+        "type": "object"
       },
-      "show_route": {"type": "boolean"},
-      "title": {"type": "string"},
-      "travel_mode": {"type": "string"}
+      "MapLocationInput": {
+        "additionalProperties": false,
+        "description": "Minimal location input from Claude.\n\nOnly name, latitude, and longitude are required. If place_id is provided,\nthe backend will hydrate full place details from the Google Places API.",
+        "properties": {
+          "address": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Address for custom locations without place_id",
+            "title": "Address"
+          },
+          "arrival_time": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Suggested arrival time (e.g., '9:00 AM')",
+            "title": "Arrival Time"
+          },
+          "duration_minutes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Suggested time at location in minutes",
+            "title": "Duration Minutes"
+          },
+          "latitude": {
+            "description": "Latitude coordinate",
+            "title": "Latitude",
+            "type": "number"
+          },
+          "longitude": {
+            "description": "Longitude coordinate",
+            "title": "Longitude",
+            "type": "number"
+          },
+          "name": {
+            "description": "Display name of the location",
+            "title": "Name",
+            "type": "string"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Tour guide tip or insider advice",
+            "title": "Notes"
+          },
+          "place_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Google Place ID. If provided, backend fetches full details.",
+            "title": "Place Id"
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude",
+          "name"
+        ],
+        "title": "MapLocationInput",
+        "type": "object"
+      }
     },
+    "additionalProperties": false,
+    "description": "Input parameters for display_map_tool.\n\nMust provide either `locations` (simple markers) or `days` (itinerary).",
+    "properties": {
+      "days": {
+        "anyOf": [
+          {
+            "items": {
+              "$ref": "#/$defs/DayInput"
+            },
+            "maxItems": 30,
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Itinerary with day structure for multi-day trips",
+        "title": "Days"
+      },
+      "locations": {
+        "anyOf": [
+          {
+            "items": {
+              "$ref": "#/$defs/MapLocationInput"
+            },
+            "maxItems": 50,
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Simple marker display - list of locations without day structure",
+        "title": "Locations"
+      },
+      "mode": {
+        "anyOf": [
+          {
+            "enum": [
+              "markers",
+              "itinerary"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Display mode. Auto-inferred: markers if locations, itinerary if days.",
+        "title": "Mode"
+      },
+      "narrative": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Tour guide intro for the trip",
+        "title": "Narrative"
+      },
+      "show_route": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Draw a route (directions) between stops the user intends to visit in this order. Route display requires the day-structured `days` itinerary input; a flat `locations` list - search results, recommendations, or other unordered sets such as 'restaurants along my route' - always renders as markers, and show_route=true is ignored for it. Set false to render an itinerary as markers only. Decide from this request alone: do not carry route intent over from earlier maps in the conversation. Default: true for `days`, false for `locations`.",
+        "title": "Show Route"
+      },
+      "title": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Title for the map or itinerary",
+        "title": "Title"
+      },
+      "travel_mode": {
+        "anyOf": [
+          {
+            "enum": [
+              "driving",
+              "walking",
+              "transit",
+              "bicycling"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Travel mode for directions (default: driving)",
+        "title": "Travel Mode"
+      }
+    },
+    "title": "DisplayMapParams",
     "type": "object"
   }
 }

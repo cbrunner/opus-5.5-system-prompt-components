@@ -12,11 +12,13 @@
         "type": "string"
       },
       "within_conversation_id": {
-        "description": "Optional chat UUID; restricts the search to that one chat.",
+        "description": "Optional chat UUID; restricts the search to that one chat. Use it to find a spot inside a chat you already have (a recent_chats entry, a pasted link, a summary hit), then read_conversation at the returned page_token.",
         "type": "string"
       }
     },
-    "required": ["query"],
+    "required": [
+      "query"
+    ],
     "type": "object"
   }
 }

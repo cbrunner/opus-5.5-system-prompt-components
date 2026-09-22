@@ -1,14 +1,32 @@
 {
-  "description": "Display weather information. Use the user's home location to determine temperature units: Fahrenheit for US users, Celsius for others.",
+  "description": "Display weather information. Use the user's home location to determine temperature units: Fahrenheit for US users, Celsius for others.<br><br>USE THIS TOOL WHEN:<br>- User asks about weather in a specific location<br>- User asks 'should I bring an umbrella/jacket'<br>- User is planning outdoor activities<br>- User asks 'what's it like in [city]' (weather context)<br><br>SKIP THIS TOOL WHEN:<br>- Climate or historical weather questions<br>- Weather as small talk without location specified",
   "name": "mcp__widgets__weather_fetch",
   "parameters": {
     "additionalProperties": false,
+    "description": "Input parameters for the weather tool.",
     "properties": {
-      "latitude": {"description": "Latitude coordinate of the location", "type": "number"},
-      "location_name": {"description": "Human-readable name of the location", "type": "string"},
-      "longitude": {"description": "Longitude coordinate of the location", "type": "number"}
+      "latitude": {
+        "description": "Latitude coordinate of the location",
+        "title": "Latitude",
+        "type": "number"
+      },
+      "location_name": {
+        "description": "Human-readable name of the location (e.g., 'San Francisco, CA')",
+        "title": "Location Name",
+        "type": "string"
+      },
+      "longitude": {
+        "description": "Longitude coordinate of the location",
+        "title": "Longitude",
+        "type": "number"
+      }
     },
-    "required": ["latitude", "longitude", "location_name"],
+    "required": [
+      "latitude",
+      "longitude",
+      "location_name"
+    ],
+    "title": "WeatherParams",
     "type": "object"
   }
 }

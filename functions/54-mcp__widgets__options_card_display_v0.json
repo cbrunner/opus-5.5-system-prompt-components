@@ -1,26 +1,53 @@
 {
-  "description": "Show a structured set of distinct approaches, each with concrete next steps.",
+  "description": "Show a structured set of distinct approaches the user could take, each with concrete next steps. Use this for personal-health questions where the answer is 2\u20136 alternative options (e.g., 'what can I do about mild knee pain'). Every option needs a one- or two-sentence description and at least two actionable bullets.\n\nDON'T use this card when:\n- The answer is one nuanced recommendation with caveats \u2014 write prose.\n- The options need explanation more than action (you'd be inventing bullets to fill the shape) \u2014 write prose.\n- The user wants A-vs-B comparison or trade-offs rather than a list of approaches.\n- It's a diagnosis question, or not a health topic.\n\nKeep each bullet to one short line. The card already shows a 'not medical advice' banner \u2014 don't add your own disclaimer, and don't re-list the options in your prose.",
   "name": "mcp__widgets__options_card_display_v0",
   "parameters": {
     "properties": {
       "options": {
         "items": {
           "properties": {
-            "bullets": {"items": {"type": "string"}, "maxItems": 8, "minItems": 2, "type": "array"},
-            "description": {"type": "string"},
-            "title": {"type": "string"}
+            "bullets": {
+              "description": "Concrete, actionable next steps for this option. Keep each to one short line. Every option needs at least two \u2014 if you can't write two concrete steps, this option (or this card) isn't the right fit.",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 8,
+              "minItems": 2,
+              "type": "array"
+            },
+            "description": {
+              "description": "One or two sentences framing this option \u2014 what it is and when it helps. Don't restate the bullets.",
+              "type": "string"
+            },
+            "title": {
+              "description": "Name of this option (a few words).",
+              "type": "string"
+            }
           },
-          "required": ["title", "description", "bullets"],
+          "required": [
+            "title",
+            "description",
+            "bullets"
+          ],
           "type": "object"
         },
         "maxItems": 8,
         "minItems": 2,
         "type": "array"
       },
-      "summary": {"type": "string"},
-      "title": {"type": "string"}
+      "summary": {
+        "description": "One short sentence (under 15 words) naming what this card shows, for surfaces that can't render it. Don't repeat the options. Write this last.",
+        "type": "string"
+      },
+      "title": {
+        "description": "Short heading for the set of options (one line).",
+        "type": "string"
+      }
     },
-    "required": ["options", "summary"],
+    "required": [
+      "options",
+      "summary"
+    ],
     "type": "object"
   }
 }

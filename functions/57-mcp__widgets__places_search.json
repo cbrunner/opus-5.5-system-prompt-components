@@ -1,18 +1,39 @@
 {
-  "description": "Search for places using Google Places. Display results via places_map_display_v0.",
+  "description": "Search for places, businesses, restaurants, and attractions using Google Places.\n\nSUPPORTS MULTIPLE QUERIES in a single call. Multiple queries can be used for:\n- efficient itinerary planning\n- breaking down broad or abstract requests: 'best hotels 1hr from London' does not translate well to a direct query. Rather it can be decomposed like: 'luxury hotels Oxfordshire', 'luxury hotels Cotswolds', 'luxury hotels North Downs' etc.\n\nUSAGE:\n{\n  \"queries\": [\n    { \"query\": \"temples in Asakusa\", \"max_results\": 3 },\n    { \"query\": \"ramen restaurants in Tokyo\", \"max_results\": 3 },\n    { \"query\": \"coffee shops in Shibuya\", \"max_results\": 2 }\n  ]\n}\n\nEach query can specify max_results (1-10, default 5).\nResults are deduplicated across queries.\nFor place names that are common, make sure you include the wider area e.g. restaurants Chelsea, London (to differentiate vs Chelsea in New York).\n\nRETURNS: Array of places with place_id, name, address, coordinates, rating, photos, hours, and other details. IMPORTANT: These results are Google data. Display them to the user via places_map_display_v0, which carries the required Google attribution, or via text. When you use the map, call places_map_display_v0 straight after this search with no response text between the two calls, then write your picks after the map. Never render these results with places_list_display_v0 \u2014 that card cannot attribute Google. Irrelevant results can be disregarded and ignored, the user will not see them.",
   "name": "mcp__widgets__places_search",
   "parameters": {
     "properties": {
-      "location_bias_lat": {"type": "number"},
-      "location_bias_lng": {"type": "number"},
-      "location_bias_radius": {"type": "number"},
+      "location_bias_lat": {
+        "description": "Optional latitude coordinate to bias results toward a specific area",
+        "type": "number"
+      },
+      "location_bias_lng": {
+        "description": "Optional longitude coordinate to bias results toward a specific area",
+        "type": "number"
+      },
+      "location_bias_radius": {
+        "description": "Optional radius in meters for location bias (default 5000 if lat/lng provided)",
+        "type": "number"
+      },
       "queries": {
+        "description": "List of search queries (1-10 queries). Each query can specify its own max_results.",
         "items": {
           "properties": {
-            "max_results": {"default": 5, "maximum": 10, "minimum": 1, "type": "integer"},
-            "query": {"type": "string"}
+            "max_results": {
+              "default": 5,
+              "description": "Maximum number of results for this query (1-10, default 5)",
+              "maximum": 10,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "query": {
+              "description": "Natural language search query (e.g., 'temples in Asakusa', 'ramen restaurants in Tokyo')",
+              "type": "string"
+            }
           },
-          "required": ["query"],
+          "required": [
+            "query"
+          ],
           "type": "object"
         },
         "maxItems": 10,
@@ -20,7 +41,9 @@
         "type": "array"
       }
     },
-    "required": ["queries"],
+    "required": [
+      "queries"
+    ],
     "type": "object"
   }
 }

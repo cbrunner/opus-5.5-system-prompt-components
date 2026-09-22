@@ -1,18 +1,49 @@
 {
-  "description": "Show a translation card for a short passage. Do not repeat the translation in the reply.",
+  "description": "Show a translation card when the user asks how to say, write or translate a specific short passage (a message, sentence, phrase or a few lines) into another language. The card shows the original and the translation side by side with copy and edit affordances, so do NOT repeat the translation in your reply \u2014 after the card, add one or two sentences of nuance only (register/politeness choice, a regional note, or what to change for a different tone). Do not use for single-word dictionary lookups, for translating long documents or files, or when the user wants an explanation of grammar rather than a rendering.",
   "name": "mcp__widgets__translation_display_v0",
   "parameters": {
     "properties": {
-      "pronunciation": {"type": "string"},
-      "source_lang": {"type": "string"},
-      "source_language": {"type": "string"},
-      "source_text": {"type": "string"},
-      "summary": {"type": "string"},
-      "target_lang": {"type": "string"},
-      "target_language": {"type": "string"},
-      "translation": {"type": "string"}
+      "pronunciation": {
+        "description": "Romanization of the whole translation (romaji, pinyin with tone marks, etc.) whenever the target script is not Latin, however long the passage is: always fill it for Japanese, Chinese, Korean, Arabic, Russian and other non-Latin scripts. Omit only for Latin-script targets.",
+        "type": "string"
+      },
+      "source_lang": {
+        "description": "BCP-47 tag of the source text (e.g. \"en\").",
+        "type": "string"
+      },
+      "source_language": {
+        "description": "Display name of the source language, in the conversation's language (e.g. \"English\").",
+        "type": "string"
+      },
+      "source_text": {
+        "description": "The exact text being translated, as the user gave it (lightly cleaned up; no quotes around it).",
+        "type": "string"
+      },
+      "summary": {
+        "description": "One short sentence (under 15 words) naming what this card shows, for surfaces that can't render it \u2014 e.g. \"Japanese translation of your message\". Write this last.",
+        "type": "string"
+      },
+      "target_lang": {
+        "description": "BCP-47 tag of the translation (e.g. \"ja\", \"es-MX\", \"zh-CN\").",
+        "type": "string"
+      },
+      "target_language": {
+        "description": "Display name of the target language, in the conversation's language; include the region or variety when it matters (e.g. \"Spanish (Mexico)\").",
+        "type": "string"
+      },
+      "translation": {
+        "description": "The translation, in the register that best fits the situation the user described. Plain text only \u2014 no romanization, notes or alternatives here.",
+        "type": "string"
+      }
     },
-    "required": ["source_language", "target_language", "target_lang", "source_text", "translation", "summary"],
+    "required": [
+      "source_language",
+      "target_language",
+      "target_lang",
+      "source_text",
+      "translation",
+      "summary"
+    ],
     "type": "object"
   }
 }

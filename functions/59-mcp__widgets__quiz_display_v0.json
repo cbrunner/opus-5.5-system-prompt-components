@@ -1,26 +1,109 @@
 {
-  "description": "Generate an interactive multiple-choice quiz rendered as a card; can also flip as flashcards.",
+  "description": "Generate an interactive multiple-choice quiz rendered as a card in the chat; the same questions can also be flipped through as flashcards (question on the front, correct answer and explanation on the back). Use this when the user asks for a quiz, practice questions, self-assessment, or to test their knowledge on a topic \u2014 including from documents or notes they've shared. Each question needs plausible distractors (wrong answers that seem reasonable), a clear explanation of why the correct answer is right, and optionally a hint. Keep explanations concise and educational. Default to 5 questions unless the user asks for a specific count. Give each question its own short correct_feedback and incorrect_feedback verdict labels (shown in bold before the explanation); built-in defaults cover any question without them.",
   "name": "mcp__widgets__quiz_display_v0",
   "parameters": {
     "properties": {
-      "description": {"type": "string"},
-      "initial_mode": {"enum": ["quiz", "flashcards"], "type": "string"},
+      "description": {
+        "description": "Optional one-line summary of what the quiz covers.",
+        "type": "string"
+      },
+      "initial_mode": {
+        "description": "Which view the card opens in. 'quiz' (default): graded multiple choice, one question at a time, with a score at the end. 'flashcards': the same questions as flip cards for review/memorization rather than testing \u2014 use when the user asks for flashcards or to study/review. The user can switch views either way.",
+        "enum": [
+          "quiz",
+          "flashcards"
+        ],
+        "type": "string"
+      },
       "questions": {
+        "description": "The quiz questions, in the order they should be presented by default.",
         "items": {
           "properties": {
-            "correct_option_id": {"type": "string"},
-            "explanation": {"type": "string"},
-            "hint": {"type": "string"},
-            "id": {"type": "string"},
-            "prompt": {"type": "string"}
+            "correct_feedback": {
+              "description": "Optional short verdict label shown in bold before the explanation when the user picks the correct answer, replacing the default \"That's right.\" A few words in the same language as the question, ending with terminal punctuation (period or exclamation). Vary it across questions and match the quiz's tone.",
+              "type": "string"
+            },
+            "correct_option_id": {
+              "description": "The id of the correct option. MUST match one of the ids in this question's options array.",
+              "type": "string"
+            },
+            "explanation": {
+              "description": "Why the correct answer is correct, shown after the user answers. Keep it concise.",
+              "type": "string"
+            },
+            "hint": {
+              "description": "Optional hint the user can reveal before answering. Nudge toward the answer without giving it away.",
+              "type": "string"
+            },
+            "id": {
+              "description": "Unique identifier for this question within the quiz (e.g. 'q1', 'q2').",
+              "type": "string"
+            },
+            "incorrect_feedback": {
+              "description": "Optional short verdict label shown in bold before the explanation when the user picks a wrong answer, replacing the default \"Not quite.\" A few words in the same language as the question, ending with terminal punctuation. Keep it encouraging, never mocking, and vary it across questions.",
+              "type": "string"
+            },
+            "options": {
+              "description": "The answer choices. Provide at least 2. Order them naturally; the frontend may shuffle.",
+              "items": {
+                "properties": {
+                  "id": {
+                    "description": "Short unique identifier for this option within its question (e.g. 'a', 'b', 'c', 'd'). Referenced by correct_option_id.",
+                    "type": "string"
+                  },
+                  "text": {
+                    "description": "The answer text shown to the user.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "text"
+                ],
+                "type": "object"
+              },
+              "minItems": 2,
+              "type": "array"
+            },
+            "prompt": {
+              "description": "The question text shown to the user.",
+              "type": "string"
+            },
+            "question_type": {
+              "description": "Format of the question. Currently only 'multiple_choice' is supported.",
+              "enum": [
+                "multiple_choice"
+              ],
+              "type": "string"
+            }
           },
+          "required": [
+            "id",
+            "question_type",
+            "prompt",
+            "options",
+            "correct_option_id",
+            "explanation"
+          ],
           "type": "object"
         },
+        "minItems": 1,
         "type": "array"
       },
-      "title": {"type": "string"}
+      "summary": {
+        "description": "One short phrase (under 45 characters) naming what this card holds, for surfaces that can't render it \u2014 e.g. \"5-question quiz on photosynthesis\" or \"flashcards for Spanish verbs\". No trailing period \u2014 it renders as a compact label, not prose. Write this last.",
+        "type": "string"
+      },
+      "title": {
+        "description": "Title of the quiz (e.g. 'Photosynthesis Basics', 'Chapter 3 Review').",
+        "type": "string"
+      }
     },
-    "required": ["questions"],
+    "required": [
+      "title",
+      "questions",
+      "summary"
+    ],
     "type": "object"
   }
 }

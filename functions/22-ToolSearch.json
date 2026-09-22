@@ -1,5 +1,5 @@
 {
-  "description": "Fetches full schema definitions for deferred tools so they can be called.\n\nQuery forms:\n- \"select:Read,Edit,Grep\" \u2014 fetch these exact tools by name\n- \"notebook jupyter\" \u2014 keyword search\n- \"+slack send\" \u2014 require slack in the name",
+  "description": "Fetches full schema definitions for deferred tools so they can be called.\n\nDeferred tools appear by name in <system-reminder> messages. Until fetched, only the name is known \u2014 there is no parameter schema, so the tool cannot be invoked. This tool takes a query, matches it against the deferred tool list, and returns the matched tools' complete JSONSchema definitions inside a <functions> block. Once a tool's schema appears in that result, it is callable exactly like any tool defined at the top of the prompt.\n\nResult format: each matched tool appears as one <function>{\"description\": \"...\", \"name\": \"...\", \"parameters\": {...}}</function> line inside the <functions> block \u2014 the same encoding as the tool list at the top of this prompt.\n\nQuery forms:\n- \"select:Read,Edit,Grep\" \u2014 fetch these exact tools by name\n- \"notebook jupyter\" \u2014 keyword search, up to max_results best matches\n- \"+slack send\" \u2014 require \"slack\" in the name, rank by remaining terms",
   "name": "ToolSearch",
   "parameters": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -15,7 +15,10 @@
         "type": "string"
       }
     },
-    "required": ["query", "max_results"],
+    "required": [
+      "query",
+      "max_results"
+    ],
     "type": "object"
   }
 }
