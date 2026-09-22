@@ -1,0 +1,14 @@
+{
+  "description": "Display weather information. Use the user's home location to determine temperature units: Fahrenheit for US users, Celsius for others.",
+  "name": "mcp__widgets__weather_fetch",
+  "parameters": {
+    "additionalProperties": false,
+    "properties": {
+      "latitude": {"description": "Latitude coordinate of the location", "type": "number"},
+      "location_name": {"description": "Human-readable name of the location", "type": "string"},
+      "longitude": {"description": "Longitude coordinate of the location", "type": "number"}
+    },
+    "required": ["latitude", "longitude", "location_name"],
+    "type": "object"
+  }
+}

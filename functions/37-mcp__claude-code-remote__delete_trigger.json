@@ -1,0 +1,14 @@
+{
+  "description": "Delete a scheduled task. The scheduled task must belong to the calling session's account.",
+  "name": "mcp__claude-code-remote__delete_trigger",
+  "parameters": {
+    "properties": {
+      "trigger_id": {
+        "description": "The scheduled task's trigger ID to delete (starts with 'trig_').",
+        "type": "string"
+      }
+    },
+    "required": ["trigger_id"],
+    "type": "object"
+  }
+}

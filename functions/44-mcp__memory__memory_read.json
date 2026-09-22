@@ -1,0 +1,15 @@
+{
+  "description": "Read one or more memory documents. Pass a list of paths to read several files in a single call.",
+  "name": "mcp__memory__memory_read",
+  "parameters": {
+    "additionalProperties": false,
+    "properties": {
+      "path": {
+        "anyOf": [{"type": "string"}, {"items": {"type": "string"}, "maxItems": 20, "minItems": 1, "type": "array"}],
+        "description": "Path of the memory document to read, or a list of up to 20 paths."
+      }
+    },
+    "required": ["path"],
+    "type": "object"
+  }
+}

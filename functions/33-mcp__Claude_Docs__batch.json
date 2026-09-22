@@ -1,0 +1,17 @@
+{
+  "description": "Create a doc, or apply several operations to one doc atomically.",
+  "name": "mcp__Claude_Docs__batch",
+  "parameters": {
+    "properties": {
+      "batch": {"type": "array"},
+      "container": {
+        "properties": {"create": {"type": "object"}, "id": {"type": "string"}, "kind": {"type": "string"}},
+        "required": ["kind"],
+        "type": "object"
+      },
+      "opId": {"type": "string"},
+      "verbose": {"type": "boolean"}
+    },
+    "type": "object"
+  }
+}

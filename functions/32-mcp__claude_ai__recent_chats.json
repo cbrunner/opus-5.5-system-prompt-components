@@ -1,0 +1,12 @@
+{
+  "description": "List the user's most recently updated conversations",
+  "name": "mcp__claude_ai__recent_chats",
+  "parameters": {
+    "properties": {
+      "after": {"description": "Return chats updated after this ISO-8601 datetime", "type": "string"},
+      "before": {"description": "Return chats updated before this ISO-8601 datetime", "type": "string"},
+      "n": {"description": "The number of recent chats to return, between 1-20", "type": "integer"}
+    },
+    "type": "object"
+  }
+}
