@@ -1,0 +1,9 @@
+{
+  "description": "Use this tool to end the conversation. This tool will close the conversation and prevent any further messages from being sent.",
+  "name": "mcp__claude_ai__end_conversation",
+  "parameters": {
+    "properties": {},
+    "title": "BaseModel",
+    "type": "object"
+  }
+}

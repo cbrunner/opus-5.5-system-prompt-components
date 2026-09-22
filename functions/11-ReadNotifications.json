@@ -1,0 +1,10 @@
+{
+  "description": "Read the notifications queued for this session \u2014 GitHub activity on subscribed PRs, scheduled triggers, and messages from other Claude sessions \u2014 and mark them delivered.",
+  "name": "ReadNotifications",
+  "parameters": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {},
+    "type": "object"
+  }
+}

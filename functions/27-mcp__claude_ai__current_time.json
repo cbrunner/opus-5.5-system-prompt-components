@@ -1,0 +1,9 @@
+{
+  "description": "Returns the current date and time as an ISO 8601 timestamp with its UTC offset, in the person's time zone when it is known and otherwise in UTC.",
+  "name": "mcp__claude_ai__current_time",
+  "parameters": {
+    "additionalProperties": false,
+    "properties": {},
+    "type": "object"
+  }
+}

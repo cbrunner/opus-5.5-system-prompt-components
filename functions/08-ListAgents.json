@@ -1,0 +1,21 @@
+{
+  "description": "Lists agents you can SendMessage to \u2014 in-process subagents you spawned, teammates, other local Claude sessions, and cloud sessions.",
+  "name": "ListAgents",
+  "parameters": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "channel": {
+        "description": "Not available in this build; leave unset.",
+        "maxLength": 256,
+        "type": "string"
+      },
+      "q": {
+        "description": "Not available in this build; leave unset.",
+        "maxLength": 256,
+        "type": "string"
+      }
+    },
+    "type": "object"
+  }
+}

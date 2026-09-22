@@ -1,0 +1,22 @@
+{
+  "description": "Search through past user conversations to find relevant context and information",
+  "name": "mcp__claude_ai__conversation_search",
+  "parameters": {
+    "properties": {
+      "max_results": {
+        "description": "The number of results to return, between 1-10",
+        "type": "integer"
+      },
+      "query": {
+        "description": "A short search query describing what to find",
+        "type": "string"
+      },
+      "within_conversation_id": {
+        "description": "Optional chat UUID; restricts the search to that one chat.",
+        "type": "string"
+      }
+    },
+    "required": ["query"],
+    "type": "object"
+  }
+}
