@@ -1,0 +1,20 @@
+{
+  "description": "Invoke a skill.\n\nA skill is a packaged set of instructions the user or project has set up for a particular kind of task. Available skills appear in a system-reminder listing. When the task at hand is one a listed skill covers, call this tool first.",
+  "name": "Skill",
+  "parameters": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "args": {
+        "description": "Optional arguments for the skill",
+        "type": "string"
+      },
+      "skill": {
+        "description": "The name of a skill from the available-skills list. Do not guess names.",
+        "type": "string"
+      }
+    },
+    "required": ["skill"],
+    "type": "object"
+  }
+}

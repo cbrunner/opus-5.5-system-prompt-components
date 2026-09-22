@@ -1,0 +1,21 @@
+{
+  "description": "Fetches full schema definitions for deferred tools so they can be called.\n\nQuery forms:\n- \"select:Read,Edit,Grep\" \u2014 fetch these exact tools by name\n- \"notebook jupyter\" \u2014 keyword search\n- \"+slack send\" \u2014 require slack in the name",
+  "name": "ToolSearch",
+  "parameters": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "max_results": {
+        "default": 5,
+        "description": "Maximum number of results to return (default: 5)",
+        "type": "number"
+      },
+      "query": {
+        "description": "Query to find deferred tools. Use \"select:<tool_name>\" for direct selection, or keywords to search.",
+        "type": "string"
+      }
+    },
+    "required": ["query", "max_results"],
+    "type": "object"
+  }
+}

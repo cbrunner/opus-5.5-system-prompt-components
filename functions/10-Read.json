@@ -1,0 +1,29 @@
+{
+  "description": "Reads a file from the local filesystem.\n\n- `file_path` must be an absolute path.\n- Reads up to 2000 lines by default.\n- When you already know which part of the file you need, only read that part.\n- Results are returned using cat -n format, with line numbers starting at 1.\n- Reads images and PDFs. Do NOT re-read a file you just edited to verify.",
+  "name": "Read",
+  "parameters": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "file_path": {
+        "description": "The absolute path to the file to read",
+        "type": "string"
+      },
+      "limit": {
+        "description": "The number of lines to read",
+        "type": "integer"
+      },
+      "offset": {
+        "description": "The line number to start reading from",
+        "minimum": 0,
+        "type": "integer"
+      },
+      "pages": {
+        "description": "Page range for PDF files (e.g., \"1-5\")",
+        "type": "string"
+      }
+    },
+    "required": ["file_path"],
+    "type": "object"
+  }
+}

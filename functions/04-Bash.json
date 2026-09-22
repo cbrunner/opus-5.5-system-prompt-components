@@ -1,0 +1,28 @@
+{
+  "description": "Executes a bash command and returns its output.\n\n- Working directory persists between calls, but prefer absolute paths \u2014 `cd` in a compound command can trigger a permission prompt. Shell state (env vars, functions) does not persist; the shell is initialized from the user's profile.\n- IMPORTANT: Avoid using this tool to run `find`, `grep`, `cat`, `head`, `tail`, `sed`, `awk`, or `echo` commands, unless explicitly instructed or after you have verified that a dedicated tool cannot accomplish your task.\n- Command output is displayed to you, not reliably to the user.\n- `timeout` is in milliseconds: default 120000, max 600000.",
+  "name": "Bash",
+  "parameters": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "command": {
+        "description": "The command to execute",
+        "type": "string"
+      },
+      "dangerouslyDisableSandbox": {
+        "description": "Set this to true to dangerously override sandbox mode and run commands without sandboxing.",
+        "type": "boolean"
+      },
+      "description": {
+        "description": "Clear, concise description of what this command does in active voice.",
+        "type": "string"
+      },
+      "timeout": {
+        "description": "Optional timeout in milliseconds (max 600000)",
+        "type": "number"
+      }
+    },
+    "required": ["command"],
+    "type": "object"
+  }
+}
