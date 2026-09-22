@@ -1,0 +1,25 @@
+{
+  "description": "Edit a tab's contents, rename a doc or tab, or change a stored value.",
+  "name": "mcp__Claude_Docs__update",
+  "parameters": {
+    "properties": {
+      "container": {
+        "properties": {"id": {"type": "string"}, "kind": {"type": "string"}, "version": {"type": "string"}},
+        "required": ["kind", "id"],
+        "type": "object"
+      },
+      "payload": {"anyOf": [{"type": "object"}, {"type": "string"}]},
+      "ref": {
+        "properties": {
+          "id": {"type": "string"},
+          "object": {"enum": ["project", "file", "node", "utterance", "enum"], "type": "string"}
+        },
+        "required": ["object", "id"],
+        "type": "object"
+      },
+      "verbose": {"type": "boolean"}
+    },
+    "required": ["ref", "payload"],
+    "type": "object"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "description": "List memory documents (optionally under a path prefix), sorted by path. Returns path, size, and last-updated time for each.",
+  "name": "mcp__memory__memory_list",
+  "parameters": {
+    "additionalProperties": false,
+    "properties": {
+      "cursor": {
+        "description": "Path of the last entry from a previous call.",
+        "type": "string"
+      },
+      "include_preview": {
+        "description": "If true, include a one-line preview of each file's content.",
+        "type": "boolean"
+      },
+      "path_prefix": {
+        "description": "Optional path prefix to filter results (e.g. /topics/).",
+        "type": "string"
+      }
+    },
+    "type": "object"
+  }
+}

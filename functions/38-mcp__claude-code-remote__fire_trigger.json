@@ -1,0 +1,18 @@
+{
+  "description": "Fire a scheduled task immediately, outside of its schedule. Optionally include text appended as an extra user turn.",
+  "name": "mcp__claude-code-remote__fire_trigger",
+  "parameters": {
+    "properties": {
+      "text": {
+        "description": "Optional text appended as an extra user message after the scheduled task's configured prompt.",
+        "type": "string"
+      },
+      "trigger_id": {
+        "description": "The scheduled task's trigger ID (starts with 'trig_').",
+        "type": "string"
+      }
+    },
+    "required": ["trigger_id"],
+    "type": "object"
+  }
+}
