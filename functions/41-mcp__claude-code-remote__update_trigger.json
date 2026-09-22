@@ -1,0 +1,17 @@
+{
+  "description": "Update a scheduled task's name, cron expression, enabled state, model, or prompt. Only provided fields change.",
+  "name": "mcp__claude-code-remote__update_trigger",
+  "parameters": {
+    "properties": {
+      "cron_expression": {"type": "string"},
+      "enabled": {"type": "boolean"},
+      "model": {"type": "string"},
+      "name": {"type": "string"},
+      "prompt": {"type": "string"},
+      "run_once_at": {"type": "string"},
+      "trigger_id": {"description": "Starts with trig_", "type": "string"}
+    },
+    "required": ["trigger_id"],
+    "type": "object"
+  }
+}

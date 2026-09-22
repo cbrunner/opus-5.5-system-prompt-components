@@ -1,0 +1,27 @@
+{
+  "description": "Display locations on a map. Call after places_search and pass place_id values verbatim.",
+  "name": "mcp__widgets__places_map_display_v0",
+  "parameters": {
+    "properties": {
+      "days": {"type": "array"},
+      "locations": {
+        "items": {
+          "properties": {
+            "latitude": {"type": "number"},
+            "longitude": {"type": "number"},
+            "name": {"type": "string"},
+            "notes": {"type": "string"},
+            "place_id": {"type": "string"}
+          },
+          "required": ["name", "latitude", "longitude"],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "show_route": {"type": "boolean"},
+      "title": {"type": "string"},
+      "travel_mode": {"type": "string"}
+    },
+    "type": "object"
+  }
+}

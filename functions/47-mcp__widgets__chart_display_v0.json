@@ -1,0 +1,31 @@
+{
+  "description": "Display a simple line, bar, or scatter chart inline. Prefer this over a custom visualizer for small datasets.",
+  "name": "mcp__widgets__chart_display_v0",
+  "parameters": {
+    "properties": {
+      "series": {
+        "items": {
+          "properties": {
+            "color": {"type": "string"},
+            "name": {"type": "string"},
+            "points": {
+              "items": {
+                "properties": {"x": {"type": "number"}, "y": {"type": "number"}},
+                "required": ["x", "y"],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "values": {"items": {"type": "number"}, "type": "array"}
+          },
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "style": {"enum": ["line", "bar", "scatter"], "type": "string"},
+      "title": {"type": "string"}
+    },
+    "required": ["series", "style"],
+    "type": "object"
+  }
+}

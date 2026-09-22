@@ -1,0 +1,21 @@
+{
+  "description": "Render an HTML file as an Artifact: a private-by-default web page hosted on claude.ai. Actions: publish, list, read, delete, open, pin, unpin, quickstart.",
+  "name": "Artifact",
+  "parameters": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "action": {
+        "enum": ["publish", "list", "read", "delete", "open", "pin", "unpin", "quickstart"],
+        "type": "string"
+      },
+      "description": {"type": "string"},
+      "file_path": {"description": "Local HTML file to publish.", "type": "string"},
+      "intent": {"description": "quickstart only: what kind of artifact to start.", "type": "string"},
+      "title": {"type": "string"},
+      "type_url": {"description": "Start from a listed Artifact type.", "type": "string"},
+      "url": {"description": "Existing artifact URL for read/update/delete/open/pin.", "type": "string"}
+    },
+    "type": "object"
+  }
+}
