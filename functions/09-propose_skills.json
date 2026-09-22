@@ -1,0 +1,29 @@
+{
+  "description": "Surface recurring multi-step procedures as skill proposals. Render-only; max 3 proposals per call.",
+  "name": "propose_skills",
+  "parameters": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "proposals": {
+        "items": {
+          "properties": {
+            "description": {"maxLength": 1024, "type": "string"},
+            "evidence": {"items": {"type": "string"}, "type": "array"},
+            "kind": {"enum": ["new", "improvement"], "type": "string"},
+            "name": {"type": "string"},
+            "skillMd": {"description": "The complete SKILL.md exactly as it should be saved.", "type": "string"},
+            "target": {"description": "Name of the existing skill to update when kind is improvement.", "type": "string"}
+          },
+          "required": ["name", "kind", "description", "skillMd"],
+          "type": "object"
+        },
+        "maxItems": 3,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": ["proposals"],
+    "type": "object"
+  }
+}

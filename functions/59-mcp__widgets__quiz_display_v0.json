@@ -1,0 +1,26 @@
+{
+  "description": "Generate an interactive multiple-choice quiz rendered as a card; can also flip as flashcards.",
+  "name": "mcp__widgets__quiz_display_v0",
+  "parameters": {
+    "properties": {
+      "description": {"type": "string"},
+      "initial_mode": {"enum": ["quiz", "flashcards"], "type": "string"},
+      "questions": {
+        "items": {
+          "properties": {
+            "correct_option_id": {"type": "string"},
+            "explanation": {"type": "string"},
+            "hint": {"type": "string"},
+            "id": {"type": "string"},
+            "prompt": {"type": "string"}
+          },
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "title": {"type": "string"}
+    },
+    "required": ["questions"],
+    "type": "object"
+  }
+}

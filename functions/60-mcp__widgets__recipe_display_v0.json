@@ -1,0 +1,26 @@
+{
+  "description": "Display an interactive recipe with adjustable servings.",
+  "name": "mcp__widgets__recipe_display_v0",
+  "parameters": {
+    "properties": {
+      "base_servings": {"type": "number"},
+      "ingredients": {
+        "items": {
+          "properties": {
+            "amount": {"type": "number"},
+            "id": {"type": "string"},
+            "name": {"type": "string"},
+            "unit": {"type": "string"}
+          },
+          "required": ["id", "name"],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "steps": {"items": {"type": "string"}, "type": "array"},
+      "title": {"type": "string"}
+    },
+    "required": ["title", "ingredients", "steps"],
+    "type": "object"
+  }
+}
