@@ -15,6 +15,8 @@ This repo only splits and labels that public extract so it is easier to read. It
 
 If you use or cite this split, credit **Pliny the Liberator** for the extraction.
 
+For the same kind of artifact obtained the other way round, recorded off the wire rather than dumped from a session, see [OrcaPromptVault](https://github.com/Continuum-AI-Corp/OrcaPromptVault): the request as the client sent it, with the tool JSON separated out and the command that reproduces the capture. Useful as a cross-check on where a session dump ends and the system prefix begins.
+
 ## What we split
 
 Pliny's file is ~1.9 MB / ~21.5k lines because it is a full **session dump** (system prefix + user turns + tool results + on-demand skill files). The actual system prompt is only the prefix before the first `--- [user turn] ---`:
